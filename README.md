@@ -19,6 +19,9 @@ A single-file browser start page: your links as colored tiles, grouped into bloc
 - **Responsive**, uses the full browser width
 - **Export / import** as a JSON file for backups
 
+<img width="1380" height="771" alt="Bildschirmfoto 2026-11-04 um 08 58 42" src="https://github.com/user-attachments/assets/f72bfd70-3cb6-4712-8bac-1c1888650438" />
+<img width="418" height="487" alt="Bildschirmfoto 2026-11-04 um 08 57 56" src="https://github.com/user-attachments/assets/87d5afd3-28f6-4650-9d96-fc66acd062ff" />
+
 ## Quick start
 
 1. Download `index.html`.
