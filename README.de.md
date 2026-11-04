@@ -4,6 +4,8 @@ Deutsch · [English](README.md)
 
 Eine Browser-Startseite in einer einzigen Datei: deine Links als farbige Kacheln, gegliedert in Blöcke und Spalten, dazu Wetter, Uhr und Suchleiste. Kein Build-Schritt, kein Framework, kein Konto. Alles wird in deinem Browser gespeichert.
 
+<img width="1384" height="678" alt="Bildschirmfoto 2026-11-04 um 08 59 09" src="https://github.com/user-attachments/assets/fdaab89a-ad26-41a0-8cfb-505b6af49a88" />
+
 ## Funktionen
 
 - **Link-Kacheln** mit Name, Adresse und Farbe (3 Farbpaletten plus freie Farbwahl), Öffnen in einem neuen Tab
