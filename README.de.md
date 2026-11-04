@@ -19,6 +19,9 @@ Eine Browser-Startseite in einer einzigen Datei: deine Links als farbige Kacheln
 - **Responsiv**, nutzt die volle Browserbreite
 - **Export / Import** als JSON-Datei für Sicherungen
 
+<img width="1380" height="771" alt="Bildschirmfoto 2026-11-04 um 08 58 42" src="https://github.com/user-attachments/assets/f72bfd70-3cb6-4712-8bac-1c1888650438" />
+<img width="418" height="487" alt="Bildschirmfoto 2026-11-04 um 08 57 56" src="https://github.com/user-attachments/assets/87d5afd3-28f6-4650-9d96-fc66acd062ff" />
+
 ## Schnellstart
 
 1. `index.html` herunterladen.
