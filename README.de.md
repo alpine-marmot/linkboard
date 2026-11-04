@@ -24,12 +24,11 @@ Eine Browser-Startseite in einer einzigen Datei: deine Links als farbige Kacheln
 
 ## Schnellstart
 
-1. `index.html` herunterladen.
+1. `index.html` herunterladen oder diese Seite als Startseite im Browser hinterlegen: alpine-marmot.github.io/linkboard/
 2. Im Browser öffnen.
 3. Oben rechts auf **Bearbeiten** klicken, um Blöcke, Spalten und Links anzulegen.
 4. Optional: die Datei als Startseite des Browsers eintragen, z. B. `file:///Pfad/zu/index.html`.
 
-Du kannst die Seite auch mit **GitHub Pages** veröffentlichen (Settings → Pages → Deploy from branch `main`, Ordner `/root`) und diese Adresse als Startseite nutzen. Über https funktioniert die Wetterabfrage auch in Browsern, die lokale Dateien einschränken, etwa Safari.
 
 ## Bedienung
 
