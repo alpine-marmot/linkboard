@@ -4,6 +4,8 @@
 
 A single-file browser start page: your links as colored tiles, grouped into blocks and columns, with weather, a clock and a search bar. No build step, no framework, no account. Everything is stored in your browser.
 
+<img width="1384" height="678" alt="Bildschirmfoto 2026-11-04 um 08 59 09" src="https://github.com/user-attachments/assets/fdaab89a-ad26-41a0-8cfb-505b6af49a88" />
+
 ## Features
 
 - **Link tiles** with name, URL and color (3 color palettes plus a free color picker), opened in a new tab
