@@ -29,7 +29,6 @@ A single-file browser start page: your links as colored tiles, grouped into bloc
 3. Click **Edit** (top right) to add blocks, columns and links.
 4. Optional: set the file as your browser's home page, e.g. `file:///path/to/index.html`.
 
-You can also host it with **GitHub Pages** (Settings → Pages → deploy from branch `main`, folder `/root`) and use that address as your start page. Hosted over https, the weather request also works in browsers that restrict local files, such as Safari.
 
 ## Usage
 
