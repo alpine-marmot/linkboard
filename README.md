@@ -24,7 +24,7 @@ A single-file browser start page: your links as colored tiles, grouped into bloc
 
 ## Quick start
 
-1. Download `index.html`.
+1. Download `index.html`or set this link as your homepage: alpine-marmot.github.io/linkboard/
 2. Open it in your browser.
 3. Click **Edit** (top right) to add blocks, columns and links.
 4. Optional: set the file as your browser's home page, e.g. `file:///path/to/index.html`.
