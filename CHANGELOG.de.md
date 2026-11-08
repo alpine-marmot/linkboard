@@ -4,7 +4,9 @@ Deutsch · [English](CHANGELOG.md)
 
 Hier stehen alle wichtigen Änderungen an Linkboard. Das Format folgt [Keep a Changelog](https://keepachangelog.com/de/1.1.0/), die Versionsnummern folgen der [Semantischen Versionierung](https://semver.org/lang/de/).
 
-## [Unveröffentlicht]
+## [Unreleased]
+
+## [1.1.0] 2026-11-04
 
 ### Neu
 - **Link-Check:** Ein optionaler grüner oder roter Punkt in jeder Kachel zeigt, ob der Server des Links antwortet. Scheitert die erste Anfrage, folgt ein zweiter Versuch mit einer anderen Anfrageart. Die Ergebnisse werden 15 Minuten zwischengespeichert. Ein grauer Punkt heisst "nicht geprüft" (Prüfung läuft noch, offline oder von der Seite aus nicht prüfbar, zum Beispiel `http://`-Links und lokale Adressen bei einer über https ausgelieferten Seite). Der Check lässt sich pro Link abschalten.
@@ -40,5 +42,5 @@ Erste öffentliche Version.
 - Export und Import als JSON-Datei.
 - README auf Deutsch und Englisch, MIT-Lizenz.
 
-[Unveröffentlicht]: https://github.com/alpine-marmot/linkboard/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/alpine-marmot/linkboard/releases/tag/v1.0.0
+[Unveröffentlicht]: https://github.com/alpine-marmot/linkboard/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/alpine-marmot/linkboard/compare/v1.0.0...v1.1.0
