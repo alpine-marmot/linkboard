@@ -6,6 +6,8 @@ All notable changes to Linkboard are listed here. The format follows [Keep a Cha
 
 ## [Unreleased]
 
+## [1.1.0] 2026-11-08
+
 ### Added
 - **Link check:** an optional green or red dot on each tile shows whether the link's server responds. If the first request fails, a second attempt with a different request type follows. Results are cached for 15 minutes. A gray dot means "not checked" (still checking, offline, or not checkable from the page, for example `http://` links and local addresses on a page served over https). The check can be switched off per link.
 - **Statistics:** a new button next to the color dots opens a chart view with the 10 most clicked links and the click history per day (14 days), week (12 weeks) or month (12 months), for all links or a single one.
@@ -40,5 +42,6 @@ First public release.
 - Export and import as a JSON file.
 - English and German README, MIT license.
 
-[Unreleased]: https://github.com/alpine-marmot/linkboard/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/alpine-marmot/linkboard/releases/tag/v1.0.0
+[Unreleased]: https://github.com/alpine-marmot/linkboard/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/alpine-marmot/linkboard/compare/v1.0.0...v1.1.0
+
