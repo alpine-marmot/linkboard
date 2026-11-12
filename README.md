@@ -5,6 +5,8 @@
 A single-file browser start page: your links as colored tiles, grouped into blocks and columns, with weather, a clock and a search bar. No build step, no framework, no account. Everything is stored in your browser.
 
 > **Important if you use Safari:** Safari deletes the stored data of a website (including your links) after 7 days of Safari use without any click or keystroke on that site. With the hosted GitHub Pages version your links can therefore disappear. In Safari, please use the **downloaded `index.html` opened from your computer** instead of the GitHub link, and make an **Export** from time to time. The 7-day rule is documented for websites. For local files we found no confirmation that it applies, but their behavior in Safari is not officially documented either, so regular exports remain advisable. Details: *Data and privacy*.
+![Linkboard im dunklen Design](screenshots/darkmode.png)
+![Linkboard im hellen Design](screenshots/whitemode.png)
 
 ## Features
 
