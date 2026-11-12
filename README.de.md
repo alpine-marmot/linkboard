@@ -6,6 +6,18 @@ Eine Browser-Startseite in einer einzigen Datei: deine Links als farbige Kacheln
 
 > **Wichtig, wenn du Safari nutzt:** Safari löscht die gespeicherten Daten einer Website (auch deine Links) nach 7 Tagen Safari-Nutzung, in denen du auf dieser Website nicht geklickt oder getippt hast. Bei der gehosteten Version über GitHub Pages können deine Links deshalb verschwinden. Nutze in Safari bitte die **heruntergeladene `index.html`, die du von deinem Computer aus öffnest**, statt den GitHub-Link, und mache ab und zu einen **Export**. Die 7-Tage-Regel ist für Websites dokumentiert. Für lokale Dateien haben wir keine Bestätigung gefunden, dass sie gilt, ihr Verhalten in Safari ist aber auch nicht offiziell dokumentiert, deshalb bleiben regelmässige Exporte ratsam. Details: *Daten und Datenschutz*.
 
+## Screenshots
+
+![Linkboard im dunklen Design](screenshots/dark.png)
+
+![Linkboard im hellen Design](screenshots/light.png)
+
+![Bearbeitungsmodus (Deutsch)](screenshots/edit-de.png)
+
+![Einstellungen (englische Oberfläche)](screenshots/settings-en.png)
+
+![Lesezeichen-Import](screenshots/import.png)
+
 ## Funktionen
 
 - **Link-Kacheln** mit Name, Adresse und Farbe (4 Farbpaletten, darunter Graustufen, plus freie Farbwahl), Öffnen in einem neuen Tab. Es geht **nicht nur um Webadressen**: auch E-Mail, Telefon, Dateien, Ordner und Apps sind möglich (siehe *Link-Arten*)

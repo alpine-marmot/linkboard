@@ -17,7 +17,7 @@ All notable changes to Linkboard are listed here. The format follows [Keep a Cha
 - **More link types:** addresses without `//` such as `spotify:…`, `facetime:…`, `maps:…`, `geo:…` now stay unchanged (before, `https://` was wrongly put in front). `javascript:`, `data:`, `vbscript:` and `blob:` are no longer accepted. The bookmark import now also takes app links and other address types (not `file:`, `chrome:`, `about:` and similar). Favicon requests to Google are only made for web links (`http`, `https`).
 
 ### Documentation
-- README: new *Link types* section with examples and limits; privacy section reworked ("At a glance" overview, notes on third-party cookies, no integrity check for SortableJS, personal data in `mailto:`/`tel:` tiles, weather request with Bern as the default location).
+- README: screenshots added; new *Link types* section with examples and limits; privacy section reworked ("At a glance" overview, notes on third-party cookies, no integrity check for SortableJS, personal data in `mailto:`/`tel:` tiles, weather request with Bern as the default location).
 
 ## [1.1.0] - 2026-11-08
 

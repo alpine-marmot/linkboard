@@ -17,7 +17,7 @@ Hier stehen alle wichtigen Änderungen an Linkboard. Das Format folgt [Keep a Ch
 - **Mehr Link-Arten:** Adressen ohne `//` wie `spotify:…`, `facetime:…`, `maps:…`, `geo:…` bleiben jetzt unverändert (bisher wurde ihnen fälschlich `https://` vorangestellt). `javascript:`, `data:`, `vbscript:` und `blob:` werden nicht mehr angenommen. Der Lesezeichen-Import übernimmt jetzt auch App-Links und andere Adressarten (nicht `file:`, `chrome:`, `about:` und ähnliche). Favicon-Anfragen an Google gehen nur noch für Web-Links (`http`, `https`).
 
 ### Dokumentation
-- README: neuer Abschnitt *Link-Arten* mit Beispielen und Einschränkungen; Datenschutz-Abschnitt überarbeitet (Übersicht "Auf einen Blick", Hinweise zu Drittanbieter-Cookies, fehlender Integritätsprüfung für SortableJS, Personendaten in `mailto:`/`tel:`-Kacheln, Wetter-Anfrage mit Bern als Standardort).
+- README: Screenshots ergänzt; neuer Abschnitt *Link-Arten* mit Beispielen und Einschränkungen; Datenschutz-Abschnitt überarbeitet (Übersicht "Auf einen Blick", Hinweise zu Drittanbieter-Cookies, fehlender Integritätsprüfung für SortableJS, Personendaten in `mailto:`/`tel:`-Kacheln, Wetter-Anfrage mit Bern als Standardort).
 
 ## [1.1.0] - 2026-11-08
 
