@@ -26,7 +26,7 @@ Eine Browser-Startseite in einer einzigen Datei: deine Links als farbige Kacheln
 - **Sortieren** pro Spalte: A–Z, nach Farbe oder nach meisten Klicks; Filter nach Farbe; Live-Suche (Enter öffnet den ersten Treffer)
 - **Top-Links-Kachel**: zeigt die meistgeklickten Links, Top 5 oder Top 10
 - **Alle öffnen**: Ein Button im Kopf jeder Spalte öffnet alle Links dieser Spalte mit einem Klick in neuen Tabs (jeder zählt als Klick; der Browser fragt eventuell, ob Pop-ups erlaubt sind)
-- **Lesezeichen-Import**: **Import** (Bearbeitungsmodus) liest auch Lesezeichen-Dateien (HTML) aus Chrome, Edge, Firefox und Safari. Übernommen werden Web-, E-Mail-, Telefon- und App-Links (nicht `javascript:`, `data:`, `file:`, `chrome:`, `about:` und ähnliche). Du wählst die Links aus und übernimmst entweder die Ordnerstruktur (Ordner wird Block, Unterordner wird Spalte) oder legst alles flach in Spalten zu 20 an ("Import 1, 2, 3 …"); bereits vorhandene Links sind abgewählt
+- **Lesezeichen-Import**: **Lesezeichen** (Bearbeitungsmodus) liest auch Lesezeichen-Dateien (HTML) aus Chrome, Edge, Firefox und Safari. Übernommen werden Web-, E-Mail-, Telefon- und App-Links (nicht `javascript:`, `data:`, `file:`, `chrome:`, `about:` und ähnliche). Du wählst die Links aus und übernimmst entweder die Ordnerstruktur (Ordner wird Block, Unterordner wird Spalte) oder legst alles flach in Spalten zu 20 an ("Import 1, 2, 3 …"); bereits vorhandene Links sind abgewählt
 - **Link-Check**: ein optionaler grüner oder roter Punkt zeigt, ob der Server eines Links antwortet (nicht, ob die Seite selbst existiert); pro Link oder global in den Einstellungen abschaltbar
 - **Statistik**: eine Diagrammansicht (Balken-Symbol neben den Farbpunkten) zeigt die meistgeklickten Links und den Klickverlauf pro Tag, Woche oder Monat; gezählt werden nur Klicks über diese Seite; in den Einstellungen abschaltbar (dann wird kein Tagesverlauf mehr aufgezeichnet)
 - **Wetter und Aussentemperatur** oben rechts (Open-Meteo, kein API-Schlüssel); per Klick änderst du den Ort
@@ -36,7 +36,8 @@ Eine Browser-Startseite in einer einzigen Datei: deine Links als farbige Kacheln
 - **Zwei Sprachen**: Die Oberfläche gibt es auf Deutsch und Englisch (Button **DE/EN** neben dem Hell/Dunkel-Umschalter; beim ersten Start gilt die Browsersprache). Deine eigenen Block-, Spalten- und Linknamen werden nie übersetzt
 - **Dunkles und helles Design**
 - **Responsiv**, nutzt die volle Browserbreite
-- **Export / Import** als JSON-Datei für Sicherungen
+- **Speicherung in einer Datei** (nur Chrome und Edge): Linkboard speichert deine Daten auf Wunsch in einer Datei, zum Beispiel in einem Cloud-Ordner, und gleicht sie zwischen zwei Geräten ab (siehe *Speicherung und Abgleich*). Beim ersten Start fragt Linkboard danach
+- **Datensicherung** (Einstellungen): Sicherung als JSON-Datei herunterladen und wieder laden, in jedem Browser
 
 ## Link-Arten
 
@@ -60,6 +61,38 @@ Gut zu wissen:
 - **Link-Check, Favicon und "Alle öffnen"** gibt es nur bei Web-Links (`http`, `https`). Andere Kacheln haben keinen Punkt und kein Webseiten-Symbol.
 - Adressen mit Passwort oder Token (zum Beispiel `https://benutzer:geheim@…`) gehören nicht in eine Kachel, siehe *Daten und Datenschutz*.
 
+## Speicherung und Abgleich
+
+Standardmässig speichert Linkboard im Speicher des Browsers (siehe *Daten und Datenschutz*). Damit hast du zu Hause und im Geschäft zwei getrennte Stände. In **Chrome und Edge** kannst du stattdessen eine Datei wählen, zum Beispiel in einem Ordner, den OneDrive, iCloud Drive, Dropbox oder Google Drive abgleicht. Linkboard schreibt jede Änderung in diese Datei.
+
+**Welche Browser können das?**
+
+| Browser | Speichern in eine Datei |
+| --- | --- |
+| Chrome, Edge (ab Version 86), Chrome für Android (ab Version 132) | ja |
+| Opera, Vivaldi und andere Browser auf Chrome-Basis | sollten ja, nicht getestet |
+| Firefox | **nein** |
+| Safari | **nein** |
+| Brave | nur mit einem Schalter in den Browser-Einstellungen |
+| Alle Browser auf iPhone und iPad | **nein**, nach unserem Kenntnisstand, weil dort alle Browser die Technik von Apple nutzen |
+
+Wo es nicht geht, bleiben die Daten im Browser-Speicher. Nutze dann regelmässig die **Datensicherung** in den Einstellungen. Beim ersten Start zeigt Linkboard diese Übersicht und sagt dir, ob dein Browser es kann.
+
+**So gehst du vor:**
+
+1. Beim ersten Start erscheint eine Meldung. Wähle **Neue Datei anlegen …** und lege die Datei in deinem Cloud-Ordner ab (Vorschlag: `linkboard-daten.json`). Deine bisherigen Daten werden in die Datei übernommen.
+2. Auf dem zweiten Gerät wählst du **Vorhandene Datei öffnen …** und nimmst dieselbe Datei. Der Stand aus der Datei ersetzt dann den Stand in diesem Browser.
+3. Unter *Einstellungen*, *Speicherung* siehst du, wohin gespeichert wird und wann zuletzt. Dort wechselst du die Datei oder schaltest die Dateispeicherung wieder aus.
+
+**Wichtig zu wissen:**
+
+- **Was wird abgeglichen?** Blöcke, Spalten, Kacheln und Klickzähler. Einstellungen wie Uhr, Kaffeepause, Sprache, Farbpalette, Hell/Dunkel und Wetterort gelten pro Gerät.
+- **Zugriff nach einem Neustart:** Der Browser lässt Linkboard nach dem Schliessen des Tabs nicht automatisch weiter in die Datei schreiben. Linkboard zeigt dann oben eine Leiste mit **Zugriff erlauben**. Ein Klick genügt.
+- **Wenn die Datei neuer ist:** Hast du auf dem anderen Gerät etwas geändert, fragt Linkboard beim Start, welchen Stand du verwenden willst (Datei laden oder den Stand dieses Browsers behalten). Beide Geräte gleichzeitig zu bearbeiten wird nicht zusammengeführt: Es gilt immer ein ganzer Stand.
+- **Der Cloud-Dienst gleicht die Datei ab, nicht Linkboard.** Linkboard sendet nichts an einen Anbieter. Warte, bis der Cloud-Dienst die Datei aktualisiert hat, bevor du auf dem anderen Gerät öffnest.
+- **Die Datei ist JSON im Klartext** (mit einem zusätzlichen Zeitstempel). Du kannst sie zugleich als Sicherung verwenden.
+- **Lokal geöffnete Datei (`file://`):** Ob der Browser das Speichern in eine Datei auch dort erlaubt, haben wir nicht abschliessend geprüft. Wenn es bei dir nicht geht, nutze die GitHub-Pages-Version oder die Datensicherung.
+
 ## Schnellstart
 
 1. `index.html` herunterladen.
@@ -81,8 +114,9 @@ Du kannst die Seite auch mit **GitHub Pages** veröffentlichen (Settings → Pag
 | Wetterort | auf das Wetter klicken |
 | Statistik | auf das Balken-Symbol neben den Farbpunkten klicken |
 | Alle Links einer Spalte öffnen | im Spaltenkopf auf *Alle öffnen* klicken (nicht im Bearbeitungsmodus) |
-| Browser-Lesezeichen importieren | Bearbeitungsmodus, **Import**, exportierte `.html`-Datei wählen, Links auswählen, **Importieren** |
-| Sicherung | Bearbeitungsmodus, **Export** / **Import** |
+| Browser-Lesezeichen importieren | Bearbeitungsmodus, **Lesezeichen**, exportierte `.html`-Datei wählen, Links auswählen, **Importieren** |
+| Daten zwischen Geräten abgleichen | Einstellungen, *Speicherung*, **Neue Datei anlegen …** oder **Vorhandene Datei öffnen …** (nur Chrome und Edge) |
+| Sicherung | Einstellungen, *Datensicherung*, **Sicherung herunterladen** / **Sicherung laden (JSON)** |
 
 ## Daten und Datenschutz
 
@@ -99,6 +133,7 @@ Linkboard hat keinen eigenen Server. Der Autor erhält, sammelt und speichert ke
 | Wetterort (Koordinaten; Name nur bei Ortswechsel) | **Ja**, an Open-Meteo. Ohne eigene Wahl sind es die Koordinaten von Bern. |
 | Bibliothek SortableJS | wird von cdnjs/Cloudflare **geladen** (Anfrage mit deiner IP-Adresse) |
 | Anfrage an jeden Web-Link mit eingeschaltetem Link-Check | **Ja**, direkt an den Zielserver |
+| Datei, die du in Chrome oder Edge wählst | **Nicht durch Linkboard.** Linkboard schreibt nur in diese Datei. Liegt sie in einem Cloud-Ordner, überträgt der Cloud-Dienst sie nach seinen eigenen Regeln. |
 | Kaffeepause und Signalton | **Nein.** Reine Browserfunktion, es wird nichts angefragt. |
 | E-Mail-, Telefon-, Datei- und App-Links | **Nein**, bis du sie anklickst. Dann übernimmt Browser oder Betriebssystem. |
 
@@ -110,14 +145,17 @@ Linkboard speichert seine Daten im **lokalen Speicher** deines Browsers (`localS
 - `startseite-v1-chk`: Ergebnisse des Link-Checks (Adresse, erreichbar ja/nein, Zeitpunkt der Prüfung)
 - `startseite-v1-settings`: Einstellungen (Uhrformat, Kaffeepause ein/aus mit Zeiten und Ton, Link-Check ein/aus, Statistik ein/aus)
 - `startseite-v1-lang`: Oberflächensprache (`de` oder `en`)
+- `startseite-v1-store`: Speicherart (`browser` oder `file`)
+- `startseite-v1-ts`: Zeitpunkt der letzten Änderung (für den Vergleich mit der Datei)
+- IndexedDB `linkboard-fs`: nur wenn du eine Datei gewählt hast; sie enthält einen Verweis auf diese Datei (nicht ihren Inhalt), damit Linkboard sie nach einem Neustart wiederfindet
 - `startseite-v1-loc`: Wetterort (Name und Koordinaten), nur nachdem du ihn geändert hast
 - `startseite-v1-pal`, `startseite-v1-theme`: Farbpalette und helles/dunkles Design
 
 Das bedeutet:
 
-- Die Daten gehören zu einem Browser, einem Browserprofil, einem Gerät und einer Seitenadresse. Linkboard in Chrome und in Firefox, oder als lokale Datei und über GitHub Pages geöffnet, hat getrennte Daten. Mit **Export** und **Import** nimmst du sie mit.
+- Die Daten gehören zu einem Browser, einem Browserprofil, einem Gerät und einer Seitenadresse. Linkboard in Chrome und in Firefox, oder als lokale Datei und über GitHub Pages geöffnet, hat getrennte Daten. Mit der Speicherung in einer Datei (nur Chrome und Edge) oder mit einer Sicherung (Einstellungen, *Datensicherung*) nimmst du sie mit.
 - Nach unserem Kenntnisstand verschlüsseln Browser den lokalen Speicher nicht selbst. Wer Zugriff auf dein Benutzerkonto oder auf einen unverschlüsselten Datenträger hat, kann ihn lesen. Nutze getrennte Benutzerkonten und eine Festplattenverschlüsselung (zum Beispiel BitLocker oder FileVault).
-- Die Export-Datei ist JSON im Klartext und enthält alle Links und die Klickhistorie. Bewahre sie entsprechend auf.
+- Die Sicherungs- und die Speicherdatei sind JSON im Klartext und enthalten alle Links und die Klickhistorie. Bewahre sie entsprechend auf, besonders in einem Cloud-Ordner, auf den auch andere zugreifen können.
 - Lege keine Passwörter, Tokens oder andere Geheimnisse in Link-Adressen ab (auch nicht in Form von `https://benutzer:passwort@…` oder geheimen Freigabe-Links). Sie stehen im Klartext im lokalen Speicher, in der Export-Datei und werden beim Anklicken an die Zielseite gesendet.
 - Wenn du Kacheln mit `mailto:` oder `tel:` für andere Personen anlegst, speicherst du deren Personendaten. Das ist für den privaten Gebrauch meist unproblematisch, im Betrieb aber datenschutzrelevant (siehe *Schweizer Datenschutzrecht*).
 - Private Fenster behalten die Daten nach dem Schliessen nicht.
@@ -150,14 +188,15 @@ Die Pfade sind Beispiele für das Standardprofil. Der Profilordner kann anders h
 
 ### Lokale Datei oder gehostete Version
 
-- Firefox (ab Version 92): Jeder Dateipfad hat einen eigenen Speicher. Wenn du `index.html` verschiebst oder umbenennst, startet Linkboard leer. Stelle deine Daten mit **Import** wieder her.
+- Firefox (ab Version 92): Jeder Dateipfad hat einen eigenen Speicher. Wenn du `index.html` verschiebst oder umbenennst, startet Linkboard leer. Stelle deine Daten mit **Sicherung laden (JSON)** in den Einstellungen wieder her.
 - Chrome und Edge: Lokale Dateien teilen sich einen Speicherbereich (mindestens innerhalb desselben Ordners). Dieses Verhalten ist nicht standardisiert und kann sich ändern. Andere lokale HTML-Seiten könnten daher die Daten von Linkboard lesen oder überschreiben. Wenn das wichtig ist, betreibe Linkboard auf einem Webserver.
-- Safari: Nutze die heruntergeladene lokale Datei statt des GitHub-Pages-Links (siehe Hinweis ganz oben). Die 7-Tage-Regel ist für Websites dokumentiert. Für lokale Dateien haben wir keine Bestätigung gefunden, dass sie gilt, und ihr Verhalten in Safari ist auch nicht offiziell dokumentiert. Mache in jedem Fall regelmässige Exporte.
+- Safari: Nutze die heruntergeladene lokale Datei statt des GitHub-Pages-Links (siehe Hinweis ganz oben). Die 7-Tage-Regel ist für Websites dokumentiert. Für lokale Dateien haben wir keine Bestätigung gefunden, dass sie gilt, und ihr Verhalten in Safari ist auch nicht offiziell dokumentiert. Mache in jedem Fall regelmässige Sicherungen.
 
 ### Daten ansehen oder löschen
 
 - Ansehen: Entwicklerwerkzeuge öffnen. Chrome und Edge: `F12`, Reiter *Application*, *Local Storage*. Firefox: `F12`, Reiter *Storage*, *Local Storage*. Safari: In den Einstellungen das Menü Entwickler aktivieren, dann *Web-Inspektor einblenden*, Reiter *Speicher*, *Lokaler Speicher*.
-- Löschen: entweder die Schlüssel, die mit `startseite-v1` beginnen, in den Entwicklerwerkzeugen entfernen, oder die Websitedaten in den Browsereinstellungen löschen (Bereich Datenschutz, "Cookies und Websitedaten" oder "Websitedaten"; die Menübezeichnungen unterscheiden sich je nach Version). Mache vorher einen **Export**, wenn du deine Links behalten willst.
+- Datei: Wenn du die Dateispeicherung beendest (Einstellungen, *Speicherung*, **Nicht mehr in Datei speichern**), wird der Verweis auf die Datei gelöscht. Die Datei selbst bleibt bestehen, lösche sie bei Bedarf selbst.
+- Löschen: entweder die Schlüssel, die mit `startseite-v1` beginnen, in den Entwicklerwerkzeugen entfernen, oder die Websitedaten in den Browsereinstellungen löschen (Bereich Datenschutz, "Cookies und Websitedaten" oder "Websitedaten"; die Menübezeichnungen unterscheiden sich je nach Version). Mache vorher eine **Sicherung**, wenn du deine Links behalten willst.
 
 ### Welche externen Dienste werden kontaktiert?
 

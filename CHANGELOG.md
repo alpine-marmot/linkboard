@@ -6,6 +6,19 @@ All notable changes to Linkboard are listed here. The format follows [Keep a Cha
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-11-14
+
+### Added
+- **Saving to a file** (Chrome and Edge only): Linkboard can store your data in a file you choose, for example in a cloud folder (OneDrive, iCloud Drive, Dropbox, Google Drive), and keep two devices in sync. Every change is written to the file. After a restart one click on **Allow access** is needed. If the file is newer than the data in the browser, Linkboard asks which version to use. If the file is invalid, it is never overwritten.
+- **First-start message** that explains the choice and states clearly that saving to a file only works in Chrome and Edge, and not in Firefox, Safari, Brave (without a flag) and all browsers on iPhone and iPad. Existing users see the message once; their data is copied into the new file. On a second device an existing file can be opened.
+- **Storage status in the settings:** shows whether Linkboard saves to a file or to the browser storage, the file name and the time of the last save. A bar at the top appears when access to the file is needed or saving failed.
+
+### Changed
+- **The backup moved to the settings** (section *Backup*): **Download a backup** and **Load a backup (JSON)**. In the header, the **Import** button became **Bookmarks** and only imports bookmark files (HTML).
+
+### Documentation
+- README (English and German): new section *Storage and synchronization* with a browser table, notes on file storage in the privacy section (new storage keys, IndexedDB reference to the file, cloud folder).
+
 ## [1.2.0] - 2026-11-12
 
 ### Added
@@ -55,7 +68,8 @@ First public release.
 - Export and import as a JSON file.
 - English and German README, MIT license.
 
-[Unreleased]: https://github.com/alpine-marmot/linkboard/compare/v1.2.0...HEAD
+[Unreleased]: https://github.com/alpine-marmot/linkboard/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/alpine-marmot/linkboard/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/alpine-marmot/linkboard/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/alpine-marmot/linkboard/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/alpine-marmot/linkboard/releases/tag/v1.0.0

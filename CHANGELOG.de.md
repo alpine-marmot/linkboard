@@ -6,6 +6,19 @@ Hier stehen alle wichtigen Änderungen an Linkboard. Das Format folgt [Keep a Ch
 
 ## [Unveröffentlicht]
 
+## [1.3.0] - 2026-11-14
+
+### Neu
+- **Speicherung in einer Datei** (nur Chrome und Edge): Linkboard kann deine Daten in einer Datei speichern, die du wählst, zum Beispiel in einem Cloud-Ordner (OneDrive, iCloud Drive, Dropbox, Google Drive), und so zwei Geräte abgleichen. Jede Änderung wird in die Datei geschrieben. Nach einem Neustart genügt ein Klick auf **Zugriff erlauben**. Ist die Datei neuer als der Stand im Browser, fragt Linkboard, welchen Stand du verwenden willst. Eine ungültige Datei wird nie überschrieben.
+- **Meldung beim ersten Start**, die die Auswahl erklärt und deutlich sagt, dass das Speichern in eine Datei nur in Chrome und Edge geht, nicht in Firefox, Safari, Brave (ohne Schalter) und in allen Browsern auf iPhone und iPad. Bisherige Nutzer sehen die Meldung einmal, ihre Daten werden in die neue Datei übernommen. Auf einem zweiten Gerät lässt sich eine vorhandene Datei öffnen.
+- **Speicherstatus in den Einstellungen:** zeigt, ob in eine Datei oder in den Browser-Speicher gespeichert wird, den Dateinamen und den Zeitpunkt der letzten Speicherung. Eine Leiste oben erscheint, wenn der Zugriff auf die Datei nötig ist oder das Speichern fehlgeschlagen ist.
+
+### Geändert
+- **Die Datensicherung ist in die Einstellungen umgezogen** (Bereich *Datensicherung*): **Sicherung herunterladen** und **Sicherung laden (JSON)**. In der Kopfzeile heisst der Button **Import** jetzt **Lesezeichen** und importiert nur noch Lesezeichen-Dateien (HTML).
+
+### Dokumentation
+- README (Deutsch und Englisch): neuer Abschnitt *Speicherung und Abgleich* mit Browser-Tabelle, Hinweise zur Dateispeicherung im Datenschutz-Abschnitt (neue Speicherschlüssel, IndexedDB-Verweis auf die Datei, Cloud-Ordner).
+
 ## [1.2.0] - 2026-11-12
 
 ### Neu
@@ -55,7 +68,8 @@ Erste öffentliche Version.
 - Export und Import als JSON-Datei.
 - README auf Deutsch und Englisch, MIT-Lizenz.
 
-[Unveröffentlicht]: https://github.com/alpine-marmot/linkboard/compare/v1.2.0...HEAD
+[Unveröffentlicht]: https://github.com/alpine-marmot/linkboard/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/alpine-marmot/linkboard/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/alpine-marmot/linkboard/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/alpine-marmot/linkboard/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/alpine-marmot/linkboard/releases/tag/v1.0.0

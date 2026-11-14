@@ -62,6 +62,16 @@ body.edit .tile a{pointer-events:none}
 .add{margin-top:8px;width:100%;padding:8px;border-radius:10px;border:1px dashed var(--line);background:none;color:var(--mute)}
 .add:hover{border-color:var(--acc);color:var(--txt)}
 .sortable-ghost{opacity:.35}
+#fsbar{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;padding:8px 16px;background:var(--panel);border-bottom:1px solid var(--line);font-size:.9rem}
+#fsbar[hidden],.fsb [hidden]{display:none}
+.fsst{display:flex;gap:9px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);font-size:.88rem;margin-bottom:10px}
+.fsst i{flex:none;width:10px;height:10px;border-radius:50%;margin-top:5px;background:var(--mute)}
+.fsst.ok i{background:#6fbf73}.fsst.warn i{background:#e0b252}
+.fsw{border:1px solid #e0b252;border-radius:10px;padding:10px 12px;margin:12px 0;font-size:.88rem;background:rgba(224,178,82,.12)}
+.fsw b{display:block;margin-bottom:4px}
+.fsb{display:flex;flex-direction:column;gap:8px;margin:12px 0 4px}
+.fsb .btn{text-align:left}
+#fsdlg{width:min(480px,92vw)}
 dialog{background:var(--panel);color:var(--txt);border:1px solid var(--line);border-radius:14px;padding:20px;width:min(380px,92vw)}
 dialog::backdrop{background:rgba(0,0,0,.55)}
 dialog h3{margin:0 0 14px}
@@ -181,8 +191,7 @@ body.edit .oa{display:none}
   <button class="btn ed" id="addcol" data-i="addcol">+ Spalte</button>
   <button class="btn ed" id="addblk" data-i="addblk">+ Block</button>
   <button class="btn ed" id="addsmart" data-i="addsmart" data-i-title="addsmart_t" title="Kachel mit den meistgeklickten Links">+ Top-Links</button>
-  <button class="btn ed" id="exp" data-i="exp" data-i-title="exp_t" title="Sicherung herunterladen">Export</button>
-  <button class="btn ed" id="imp" data-i="imp" data-i-title="imp_t" title="Sicherung (JSON) oder Lesezeichen (HTML) laden">Import</button>
+  <button class="btn ed" id="imp" data-i="imp" data-i-title="imp_t" title="Lesezeichen (HTML) importieren">Lesezeichen</button>
   <input type="file" id="file" accept=".json,.html,.htm" hidden>
   <button class="btn" id="mode">Bearbeiten</button>
   <button class="btn" id="theme" data-i-title="theme_t" data-i-aria="theme_t" title="Hell / Dunkel umschalten" aria-label="Hell / Dunkel umschalten">☀️</button>
@@ -201,6 +210,7 @@ body.edit .oa{display:none}
   </div>
   <button class="btn" id="gear" data-i-title="gear" data-i-aria="gear" title="Einstellungen" aria-label="Einstellungen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
 </header>
+<div id="fsbar" hidden></div>
 <main id="board"></main>
 <footer id="ft"><a href="https://github.com/alpine-marmot/linkboard" target="_blank" rel="noopener noreferrer">Linkboard</a> by <a href="https://github.com/alpine-marmot" target="_blank" rel="noopener noreferrer">alpine-marmot</a></footer>
 
@@ -221,8 +231,45 @@ body.edit .oa{display:none}
   </div>
 </dialog>
 
+<dialog id="fsdlg">
+  <h3 data-i="fs_title">Wo sollen deine Daten gespeichert werden?</h3>
+  <p data-i="fs_intro"></p>
+  <div class="fsw"><b data-i="fs_warnT"></b><span data-i="fs_warnD"></span></div>
+  <div class="fsst" id="fs_env"><i></i><span id="fs_envt"></span></div>
+  <p class="hint" id="fs_had" data-i="fs_had" hidden></p>
+  <div class="fsb">
+    <button class="btn pri" id="fs_new" data-i="fs_new"></button>
+    <button class="btn" id="fs_open" data-i="fs_open"></button>
+    <p class="hint" id="fs_hint" data-i="fs_hint"></p>
+    <button class="btn" id="fs_browser"></button>
+  </div>
+</dialog>
+
+<dialog id="cfdlg">
+  <h3 data-i="cf_title"></h3>
+  <p id="cf_txt"></p>
+  <div class="fsb">
+    <button class="btn pri" id="cf_file" data-i="cf_file"></button>
+    <button class="btn" id="cf_keep" data-i="cf_keep"></button>
+  </div>
+</dialog>
+
 <dialog id="setdlg">
   <div class="sh"><h3 data-i="gear">Einstellungen</h3><button class="ib" id="setclose" data-i-aria="close_a" aria-label="Schliessen">✕</button></div>
+  <h4 data-i="s_store">Speicherung</h4>
+  <div class="fsst" id="s_fsst"><i></i><span id="s_fstx"></span></div>
+  <div class="fsb">
+    <button class="btn" id="s_allow" data-i="s_allow" hidden></button>
+    <button class="btn" id="s_new" data-i="fs_new"></button>
+    <button class="btn" id="s_open" data-i="fs_open"></button>
+    <button class="btn" id="s_stop" data-i="s_stop" hidden></button>
+  </div>
+  <h4 data-i="s_backup">Datensicherung</h4>
+  <p class="hint" data-i="s_backupD"></p>
+  <div class="fsb">
+    <button class="btn" id="s_exp" data-i="s_exp"></button>
+    <button class="btn" id="s_imp" data-i="s_imp"></button>
+  </div>
   <h4 data-i="s_clock">Uhr</h4>
   <label data-i="s_fmt">Zeitformat</label>
   <div class="pal" id="s_h12"><button data-v="0" data-i="s_24">24 Stunden</button><button data-v="1" data-i="s_12">12 Stunden (AM/PM)</button></div>
@@ -276,7 +323,7 @@ body.edit .oa{display:none}
 <script>
 const $=s=>document.querySelector(s);
 let LANG=(()=>{try{const v=localStorage.getItem('startseite-v1-lang');if(v==='de'||v==='en')return v}catch(e){}return /^de/i.test(navigator.language||'')?'de':'en'})();
-const I18N={de:{"title": "Startseite", "q_ph": "Einträge suchen …", "dots_t": "Nach Farbe filtern", "stat": "Statistik", "addcol": "+ Spalte", "addblk": "+ Block", "addsmart": "+ Top-Links", "addsmart_t": "Kachel mit den meistgeklickten Links", "exp": "Export", "exp_t": "Sicherung herunterladen", "imp": "Import", "imp_t": "Sicherung (JSON) oder Lesezeichen (HTML) laden", "edit": "Bearbeiten", "done": "Fertig", "theme_t": "Hell / Dunkel umschalten", "lang_t": "Sprache umschalten (Deutsch / English)", "wx_t": "Klicken, um den Ort zu ändern", "clk_t": "Klicken für Einstellungen", "coffee": "Kaffeepause", "gear": "Einstellungen", "dlg_new": "Neuer Link", "dlg_edit": "Link bearbeiten", "f_name": "Name", "f_link": "Link", "f_chk": "Link prüfen (grüner oder roter Punkt)", "f_shape": "Form", "wide": "Breit", "square": "Quadrat", "f_color": "Farbe", "del": "Löschen", "cancel": "Abbrechen", "save": "Speichern", "custom_c": "Eigene Farbe", "close_a": "Schliessen", "s_clock": "Uhr", "s_fmt": "Zeitformat", "s_24": "24 Stunden", "s_12": "12 Stunden (AM/PM)", "s_coffee": "Kaffeepause", "s_b1": "Pause morgens", "s_b2": "Pause nachmittags", "s_rem": "Erinnerung", "s_vis": "Nur optisch", "s_snd": "Mit Ton", "s_test": "Vorschau", "s_test_t": "Tasse 8 Sekunden lang anzeigen, bei Ton auch abspielen", "s_func": "Funktionen", "s_brkT": "Kaffeepause", "s_brkD": "Zeigt zu den eingestellten Zeiten eine Kaffeetasse statt der Uhrzeit. Standardmässig aus.", "bad_scheme": "Diese Adressart (javascript:, data:, vbscript:, blob:) ist aus Sicherheitsgründen nicht erlaubt.", "s_chkT": "Link-Check", "s_chkD": "Zeigt pro Kachel einen grünen oder roten Punkt. Ohne Link-Check verschwinden auch die Punkte.", "s_statT": "Statistik", "s_statD": "Zeigt den Statistik-Button oben. Ohne Statistik wird kein Klickverlauf mehr aufgezeichnet, der einfache Klickzähler pro Link läuft weiter.", "snd_note": "Der Ton wird nur abgespielt, wenn der Browser ihn erlaubt: Die Seite muss seit dem Laden einmal angeklickt worden sein, und der Tab darf nicht stummgeschaltet sein. Safari ist besonders streng.", "snd_fail": "Der Browser blockiert den Ton gerade. Klicke einmal auf die Seite und versuche es erneut, und prüfe, ob der Tab oder das Gerät stummgeschaltet ist.", "st_day": "Tag", "st_week": "Woche", "st_month": "Monat", "st_top": "Meistgeklickte Links", "st_hist": "Verlauf", "st_all": "Alle Links", "st_none": "Noch keine Klicks in diesem Zeitraum.", "st_note_a": "Tagesgenau erfasst seit {0}. Gesamt: {1} Klicks", "st_note_b": ", davon {0} aus der Zeit davor (in den Zeiträumen nicht enthalten)", "st_note_c": "Noch keine tagesgenauen Daten. Bisher gezählt: {0} Klicks ohne Datum.", "st_note_d": "Noch keine Klicks gezählt. Die Statistik füllt sich, sobald du Links über diese Seite öffnest.", "st_note_e": " Es zählen nur Klicks über diese Seite, gespeichert in diesem Browser.", "wk_from": "Woche ab {0}", "n_clicks": "{0} Klicks", "st_aria": "Klicks im Verlauf", "im_h": "Lesezeichen importieren", "im_arr": "Anordnung", "im_folders": "Ordner übernehmen", "im_flat": "Alles flach (Import 1, 2, 3 …)", "im_n": "Links pro Spalte (höchstens)", "im_alt": "Abwechselnd pro Spalte", "im_one": "Eine Farbe", "im_chkT": "Link-Check für importierte Links einschalten", "im_chkD": "Standardmässig aus: Bei vielen Links würde sonst alle 15 Minuten eine grosse Zahl von Anfragen laufen.", "im_sel": "Auswahl", "im_q_ph": "In den Lesezeichen suchen …", "all": "Alle", "none": "Keine", "new": "Nur neue", "new_t": "Nur Links, die neu und brauchbar sind", "im_go": "Importieren", "im_go_n": "Importieren ({0})", "im_cnt": "{0} von {1} Links gewählt", "im_sum": "{0} Links in {1} Ordnern gefunden ({2}). {3} schon vorhanden oder doppelt, {4} nicht öffenbar. Diese sind abgewählt, aber in der Liste sichtbar.", "im_dup": "bereits vorhanden", "im_dupf": "doppelt in der Datei", "im_bad": "nicht öffenbar ({0})", "bad_noaddr": "keine Adresse", "im_none_found": "In dieser Datei wurden keine Lesezeichen gefunden.", "im_toast": "{0} Links in {1} Spalten importiert", "fold": "Auf- oder zuklappen", "mv_col": "Spalte verschieben", "ph_title": "Titel", "cnt_t": "Anzahl", "sort_t": "Spalte sortieren", "sort": "Sortieren", "by_color": "Farbe", "by_clicks": "Meiste Klicks", "del_tile": "Kachel löschen", "del_col": "Spalte löschen", "oa": "↗ Alle öffnen", "oa_t": "Alle Links dieser Spalte in neuen Tabs öffnen", "mv_blk": "Block verschieben", "ph_blk": "Blocktitel", "add_col2": "+ Spalte", "del_blk": "Block löschen", "hint_top": "Noch keine Klicks. Hier erscheinen deine meistgeklickten Links.", "untitled": "ohne Titel", "conf_col": "Spalte „{0}“ mit {1} Links löschen?", "conf_blk": "Block „{0}“ mit {1} Links löschen?", "new_col": "Neue Spalte", "new_blk": "Neuer Block", "top_title": "Meistgeklickt", "general": "Allgemein", "import_n": "Import", "bm_root": "Lesezeichen", "ck_wait": "Wird geprüft …", "ck_na": "Von dieser Seite aus nicht prüfbar", "ck_ok": "Erreichbar", "ck_bad": "Nicht erreichbar", "ck_at": "{0} (geprüft {1})", "ck_off": "Offline, nicht geprüft", "wx_err": "Fehler: {0}", "wx_err_t": "Wetter nicht verfügbar ({0}). Klicken, um den Ort zu ändern.", "wx_prompt": "Ort für das Wetter (z. B. Bern):", "wx_nf": "Ort nicht gefunden.", "oa_block": "Der Browser hat {0} von {1} Tabs blockiert. Erlaube Pop-ups für diese Seite (Symbol in der Adressleiste) und klicke erneut. Bereits geöffnete Tabs öffnen sich dann nochmals.", "file_err": "Datei konnte nicht gelesen werden.", "file_err2": "Datei konnte nicht gelesen werden. Erwartet wird eine Sicherung (.json) oder eine Lesezeichen-Datei (.html).", "d_fav": "Favoriten", "d_gen": "Allgemein", "d_news": "Nachrichten", "d_dev": "Entwicklung", "d_leis": "Freizeit", "d_music": "Musik", "d_movies": "Filme & Serien", "d_read": "Lesen"},en:{"title": "Start page", "q_ph": "Search entries …", "dots_t": "Filter by color", "stat": "Statistics", "addcol": "+ Column", "addblk": "+ Block", "addsmart": "+ Top links", "addsmart_t": "Tile with the most clicked links", "exp": "Export", "exp_t": "Download a backup", "imp": "Import", "imp_t": "Load a backup (JSON) or bookmarks (HTML)", "edit": "Edit", "done": "Done", "theme_t": "Switch light / dark", "lang_t": "Switch language (Deutsch / English)", "wx_t": "Click to change the location", "clk_t": "Click for settings", "coffee": "Coffee break", "gear": "Settings", "dlg_new": "New link", "dlg_edit": "Edit link", "f_name": "Name", "f_link": "Link", "f_chk": "Check link (green or red dot)", "f_shape": "Shape", "wide": "Wide", "square": "Square", "f_color": "Color", "del": "Delete", "cancel": "Cancel", "save": "Save", "custom_c": "Custom color", "close_a": "Close", "s_clock": "Clock", "s_fmt": "Time format", "s_24": "24 hours", "s_12": "12 hours (AM/PM)", "s_coffee": "Coffee break", "s_b1": "Morning break", "s_b2": "Afternoon break", "s_rem": "Reminder", "s_vis": "Visual only", "s_snd": "With sound", "s_test": "Preview", "s_test_t": "Show the cup for 8 seconds and play the sound if enabled", "s_func": "Features", "s_brkT": "Coffee break", "s_brkD": "Shows a coffee cup instead of the time at the set times. Off by default.", "bad_scheme": "This address type (javascript:, data:, vbscript:, blob:) is not allowed for security reasons.", "s_chkT": "Link check", "s_chkD": "Shows a green or red dot on each tile. With the link check off, the dots disappear too.", "s_statT": "Statistics", "s_statD": "Shows the statistics button at the top. With statistics off, no click history is recorded any more; the simple click counter per link keeps running.", "snd_note": "The sound only plays if the browser allows it: the page must have been clicked once since loading, and the tab must not be muted. Safari is especially strict.", "snd_fail": "The browser is blocking the sound right now. Click the page once and try again, and check whether the tab or device is muted.", "st_day": "Day", "st_week": "Week", "st_month": "Month", "st_top": "Most clicked links", "st_hist": "History", "st_all": "All links", "st_none": "No clicks in this period yet.", "st_note_a": "Recorded by day since {0}. Total: {1} clicks", "st_note_b": ", of which {0} from before then (not included in the periods)", "st_note_c": "No data by day yet. Counted so far: {0} clicks without a date.", "st_note_d": "No clicks counted yet. The statistics fill up as soon as you open links through this page.", "st_note_e": " Only clicks made through this page are counted; stored in this browser.", "wk_from": "Week of {0}", "n_clicks": "{0} clicks", "st_aria": "Click history", "im_h": "Import bookmarks", "im_arr": "Layout", "im_folders": "Keep folders", "im_flat": "All flat (Import 1, 2, 3 …)", "im_n": "Links per column (at most)", "im_alt": "Alternating per column", "im_one": "One color", "im_chkT": "Turn on the link check for imported links", "im_chkD": "Off by default: with many links this would otherwise send a large number of requests every 15 minutes.", "im_sel": "Selection", "im_q_ph": "Search the bookmarks …", "all": "All", "none": "None", "new": "Only new", "new_t": "Only links that are new and usable", "im_go": "Import", "im_go_n": "Import ({0})", "im_cnt": "{0} of {1} links selected", "im_sum": "{0} links in {1} folders found ({2}). {3} already present or duplicated, {4} cannot be opened. These are deselected but visible in the list.", "im_dup": "already present", "im_dupf": "duplicate in the file", "im_bad": "cannot be opened ({0})", "bad_noaddr": "no address", "im_none_found": "No bookmarks were found in this file.", "im_toast": "{0} links imported into {1} columns", "fold": "Expand or collapse", "mv_col": "Move column", "ph_title": "Title", "cnt_t": "Count", "sort_t": "Sort column", "sort": "Sort", "by_color": "Color", "by_clicks": "Most clicks", "del_tile": "Delete tile", "del_col": "Delete column", "oa": "↗ Open all", "oa_t": "Open all links of this column in new tabs", "mv_blk": "Move block", "ph_blk": "Block title", "add_col2": "+ Column", "del_blk": "Delete block", "hint_top": "No clicks yet. Your most clicked links will appear here.", "untitled": "untitled", "conf_col": "Delete column “{0}” with {1} links?", "conf_blk": "Delete block “{0}” with {1} links?", "new_col": "New column", "new_blk": "New block", "top_title": "Most clicked", "general": "General", "import_n": "Import", "bm_root": "Bookmarks", "ck_wait": "Checking …", "ck_na": "Cannot be checked from this page", "ck_ok": "Reachable", "ck_bad": "Not reachable", "ck_at": "{0} (checked {1})", "ck_off": "Offline, not checked", "wx_err": "Error: {0}", "wx_err_t": "Weather not available ({0}). Click to change the location.", "wx_prompt": "Location for the weather (e.g. Bern):", "wx_nf": "Location not found.", "oa_block": "The browser blocked {0} of {1} tabs. Allow pop-ups for this page (icon in the address bar) and click again. Tabs that are already open will open again.", "file_err": "The file could not be read.", "file_err2": "The file could not be read. Expected: a backup (.json) or a bookmarks file (.html).", "d_fav": "Favorites", "d_gen": "General", "d_news": "News", "d_dev": "Development", "d_leis": "Leisure", "d_music": "Music", "d_movies": "Movies & series", "d_read": "Reading"}};
+const I18N={de:{"title": "Startseite", "q_ph": "Einträge suchen …", "dots_t": "Nach Farbe filtern", "stat": "Statistik", "addcol": "+ Spalte", "addblk": "+ Block", "addsmart": "+ Top-Links", "addsmart_t": "Kachel mit den meistgeklickten Links", "exp": "Export", "exp_t": "Sicherung herunterladen", "imp": "Lesezeichen", "imp_t": "Lesezeichen (HTML) importieren", "edit": "Bearbeiten", "done": "Fertig", "theme_t": "Hell / Dunkel umschalten", "lang_t": "Sprache umschalten (Deutsch / English)", "wx_t": "Klicken, um den Ort zu ändern", "clk_t": "Klicken für Einstellungen", "coffee": "Kaffeepause", "gear": "Einstellungen", "dlg_new": "Neuer Link", "dlg_edit": "Link bearbeiten", "f_name": "Name", "f_link": "Link", "f_chk": "Link prüfen (grüner oder roter Punkt)", "f_shape": "Form", "wide": "Breit", "square": "Quadrat", "f_color": "Farbe", "del": "Löschen", "cancel": "Abbrechen", "save": "Speichern", "custom_c": "Eigene Farbe", "close_a": "Schliessen", "s_clock": "Uhr", "s_fmt": "Zeitformat", "s_24": "24 Stunden", "s_12": "12 Stunden (AM/PM)", "s_coffee": "Kaffeepause", "s_b1": "Pause morgens", "s_b2": "Pause nachmittags", "s_rem": "Erinnerung", "s_vis": "Nur optisch", "s_snd": "Mit Ton", "s_test": "Vorschau", "s_test_t": "Tasse 8 Sekunden lang anzeigen, bei Ton auch abspielen", "s_func": "Funktionen", "s_brkT": "Kaffeepause", "s_brkD": "Zeigt zu den eingestellten Zeiten eine Kaffeetasse statt der Uhrzeit. Standardmässig aus.", "bad_scheme": "Diese Adressart (javascript:, data:, vbscript:, blob:) ist aus Sicherheitsgründen nicht erlaubt.", "fs_title": "Wo sollen deine Daten gespeichert werden?", "fs_intro": "Linkboard kann deine Daten in einer Datei speichern, zum Beispiel in einem Cloud-Ordner (OneDrive, iCloud Drive, Dropbox, Google Drive …). So hast du zu Hause und im Geschäft denselben Stand.", "fs_warnT": "Wichtig: Das geht nur in Chrome und Edge", "fs_warnD": "Eine Datei dauerhaft beschreiben können Chrome und Edge. Browser auf Chrome-Basis wie Opera oder Vivaldi sollten es ebenfalls können. NICHT möglich ist es in Firefox, in Safari, in Brave (ausser mit einem Schalter) und in allen Browsern auf iPhone und iPad. Dort bleiben die Daten im Browser-Speicher und werden nicht zwischen Geräten abgeglichen. Sichere sie dann regelmässig unter Einstellungen > Datensicherung.", "fs_envOk": "Dein Browser unterstützt das Speichern in eine Datei.", "fs_envNo": "Dein Browser unterstützt das Speichern in eine Datei nicht. Deine Daten bleiben im Browser-Speicher.", "fs_had": "Deine bisherigen Daten werden in die neue Datei übernommen.", "fs_new": "Neue Datei anlegen …", "fs_open": "Vorhandene Datei öffnen …", "fs_hint": "Auf dem zweiten Gerät: vorhandene Datei öffnen. Der Stand aus der Datei ersetzt dann den Stand in diesem Browser.", "fs_browser": "Nur im Browser speichern", "fs_ack": "Verstanden, im Browser speichern", "fs_bad": "Die Datei {0} ist keine gültige Linkboard-Datei.", "fs_replace": "Die Daten aus der Datei {0} ersetzen den Stand in diesem Browser. Fortfahren?", "fs_stopq": "Nicht mehr in eine Datei speichern? Die Datei bleibt erhalten, Linkboard speichert danach nur noch im Browser.", "s_store": "Speicherung", "st_file": "Datei: {0}", "st_last": "zuletzt gespeichert {0}", "st_conn": "verbunden", "st_perm": "Zugriff nötig, damit Änderungen gespeichert werden", "st_lost": "Die Verbindung zur Datei ist verloren gegangen", "st_err": "Speichern in die Datei fehlgeschlagen", "st_browser": "Browser-Speicher dieses Browsers. Nicht zwischen Geräten abgeglichen.", "st_unsup": "Browser-Speicher. Dein Browser kann keine Datei speichern (nur Chrome und Edge). Sichere deine Daten regelmässig unter Datensicherung.", "s_allow": "Zugriff erlauben", "s_stop": "Nicht mehr in Datei speichern", "s_backup": "Datensicherung", "s_backupD": "Eine Sicherung ist eine Datei zum Herunterladen. Sie ist unabhängig von der Speicherung oben und funktioniert in jedem Browser.", "s_exp": "Sicherung herunterladen", "s_imp": "Sicherung laden (JSON)", "fb_perm": "Linkboard braucht Zugriff auf die Datei {0}, damit Änderungen gespeichert werden.", "fb_err": "Speichern in die Datei {0} ist fehlgeschlagen.", "fb_lost": "Die Datei ist nicht mehr verbunden.", "fb_retry": "Erneut versuchen", "cf_title": "Die Datei ist neuer", "cf_txt": "Die Datei {0} enthält einen neueren Stand (Datei: {1}, dieser Browser: {2}). Welchen Stand möchtest du verwenden?", "cf_file": "Stand aus der Datei laden", "cf_keep": "Stand dieses Browsers behalten (überschreibt die Datei)", "s_chkT": "Link-Check", "s_chkD": "Zeigt pro Kachel einen grünen oder roten Punkt. Ohne Link-Check verschwinden auch die Punkte.", "s_statT": "Statistik", "s_statD": "Zeigt den Statistik-Button oben. Ohne Statistik wird kein Klickverlauf mehr aufgezeichnet, der einfache Klickzähler pro Link läuft weiter.", "snd_note": "Der Ton wird nur abgespielt, wenn der Browser ihn erlaubt: Die Seite muss seit dem Laden einmal angeklickt worden sein, und der Tab darf nicht stummgeschaltet sein. Safari ist besonders streng.", "snd_fail": "Der Browser blockiert den Ton gerade. Klicke einmal auf die Seite und versuche es erneut, und prüfe, ob der Tab oder das Gerät stummgeschaltet ist.", "st_day": "Tag", "st_week": "Woche", "st_month": "Monat", "st_top": "Meistgeklickte Links", "st_hist": "Verlauf", "st_all": "Alle Links", "st_none": "Noch keine Klicks in diesem Zeitraum.", "st_note_a": "Tagesgenau erfasst seit {0}. Gesamt: {1} Klicks", "st_note_b": ", davon {0} aus der Zeit davor (in den Zeiträumen nicht enthalten)", "st_note_c": "Noch keine tagesgenauen Daten. Bisher gezählt: {0} Klicks ohne Datum.", "st_note_d": "Noch keine Klicks gezählt. Die Statistik füllt sich, sobald du Links über diese Seite öffnest.", "st_note_e": " Es zählen nur Klicks über diese Seite, gespeichert in diesem Browser.", "wk_from": "Woche ab {0}", "n_clicks": "{0} Klicks", "st_aria": "Klicks im Verlauf", "im_h": "Lesezeichen importieren", "im_arr": "Anordnung", "im_folders": "Ordner übernehmen", "im_flat": "Alles flach (Import 1, 2, 3 …)", "im_n": "Links pro Spalte (höchstens)", "im_alt": "Abwechselnd pro Spalte", "im_one": "Eine Farbe", "im_chkT": "Link-Check für importierte Links einschalten", "im_chkD": "Standardmässig aus: Bei vielen Links würde sonst alle 15 Minuten eine grosse Zahl von Anfragen laufen.", "im_sel": "Auswahl", "im_q_ph": "In den Lesezeichen suchen …", "all": "Alle", "none": "Keine", "new": "Nur neue", "new_t": "Nur Links, die neu und brauchbar sind", "im_go": "Importieren", "im_go_n": "Importieren ({0})", "im_cnt": "{0} von {1} Links gewählt", "im_sum": "{0} Links in {1} Ordnern gefunden ({2}). {3} schon vorhanden oder doppelt, {4} nicht öffenbar. Diese sind abgewählt, aber in der Liste sichtbar.", "im_dup": "bereits vorhanden", "im_dupf": "doppelt in der Datei", "im_bad": "nicht öffenbar ({0})", "bad_noaddr": "keine Adresse", "im_none_found": "In dieser Datei wurden keine Lesezeichen gefunden.", "im_toast": "{0} Links in {1} Spalten importiert", "fold": "Auf- oder zuklappen", "mv_col": "Spalte verschieben", "ph_title": "Titel", "cnt_t": "Anzahl", "sort_t": "Spalte sortieren", "sort": "Sortieren", "by_color": "Farbe", "by_clicks": "Meiste Klicks", "del_tile": "Kachel löschen", "del_col": "Spalte löschen", "oa": "↗ Alle öffnen", "oa_t": "Alle Links dieser Spalte in neuen Tabs öffnen", "mv_blk": "Block verschieben", "ph_blk": "Blocktitel", "add_col2": "+ Spalte", "del_blk": "Block löschen", "hint_top": "Noch keine Klicks. Hier erscheinen deine meistgeklickten Links.", "untitled": "ohne Titel", "conf_col": "Spalte „{0}“ mit {1} Links löschen?", "conf_blk": "Block „{0}“ mit {1} Links löschen?", "new_col": "Neue Spalte", "new_blk": "Neuer Block", "top_title": "Meistgeklickt", "general": "Allgemein", "import_n": "Import", "bm_root": "Lesezeichen", "ck_wait": "Wird geprüft …", "ck_na": "Von dieser Seite aus nicht prüfbar", "ck_ok": "Erreichbar", "ck_bad": "Nicht erreichbar", "ck_at": "{0} (geprüft {1})", "ck_off": "Offline, nicht geprüft", "wx_err": "Fehler: {0}", "wx_err_t": "Wetter nicht verfügbar ({0}). Klicken, um den Ort zu ändern.", "wx_prompt": "Ort für das Wetter (z. B. Bern):", "wx_nf": "Ort nicht gefunden.", "oa_block": "Der Browser hat {0} von {1} Tabs blockiert. Erlaube Pop-ups für diese Seite (Symbol in der Adressleiste) und klicke erneut. Bereits geöffnete Tabs öffnen sich dann nochmals.", "file_err": "Datei konnte nicht gelesen werden.", "file_err2": "Datei konnte nicht gelesen werden. Erwartet wird eine Sicherung (.json) oder eine Lesezeichen-Datei (.html).", "d_fav": "Favoriten", "d_gen": "Allgemein", "d_news": "Nachrichten", "d_dev": "Entwicklung", "d_leis": "Freizeit", "d_music": "Musik", "d_movies": "Filme & Serien", "d_read": "Lesen"},en:{"title": "Start page", "q_ph": "Search entries …", "dots_t": "Filter by color", "stat": "Statistics", "addcol": "+ Column", "addblk": "+ Block", "addsmart": "+ Top links", "addsmart_t": "Tile with the most clicked links", "exp": "Export", "exp_t": "Download a backup", "imp": "Bookmarks", "imp_t": "Import bookmarks (HTML)", "edit": "Edit", "done": "Done", "theme_t": "Switch light / dark", "lang_t": "Switch language (Deutsch / English)", "wx_t": "Click to change the location", "clk_t": "Click for settings", "coffee": "Coffee break", "gear": "Settings", "dlg_new": "New link", "dlg_edit": "Edit link", "f_name": "Name", "f_link": "Link", "f_chk": "Check link (green or red dot)", "f_shape": "Shape", "wide": "Wide", "square": "Square", "f_color": "Color", "del": "Delete", "cancel": "Cancel", "save": "Save", "custom_c": "Custom color", "close_a": "Close", "s_clock": "Clock", "s_fmt": "Time format", "s_24": "24 hours", "s_12": "12 hours (AM/PM)", "s_coffee": "Coffee break", "s_b1": "Morning break", "s_b2": "Afternoon break", "s_rem": "Reminder", "s_vis": "Visual only", "s_snd": "With sound", "s_test": "Preview", "s_test_t": "Show the cup for 8 seconds and play the sound if enabled", "s_func": "Features", "s_brkT": "Coffee break", "s_brkD": "Shows a coffee cup instead of the time at the set times. Off by default.", "bad_scheme": "This address type (javascript:, data:, vbscript:, blob:) is not allowed for security reasons.", "fs_title": "Where should your data be stored?", "fs_intro": "Linkboard can store your data in a file, for example in a cloud folder (OneDrive, iCloud Drive, Dropbox, Google Drive …). That way you have the same board at home and at work.", "fs_warnT": "Important: this only works in Chrome and Edge", "fs_warnD": "Chrome and Edge can write to a file permanently. Browsers based on Chrome, such as Opera or Vivaldi, should be able to as well. It is NOT possible in Firefox, in Safari, in Brave (except with a flag) and in all browsers on iPhone and iPad. There your data stays in the browser storage and is not synchronized between devices. Back it up regularly under Settings > Backup.", "fs_envOk": "Your browser supports saving to a file.", "fs_envNo": "Your browser does not support saving to a file. Your data stays in the browser storage.", "fs_had": "Your existing data will be copied into the new file.", "fs_new": "Create a new file …", "fs_open": "Open an existing file …", "fs_hint": "On your second device: open the existing file. The data in the file then replaces the data in this browser.", "fs_browser": "Store in the browser only", "fs_ack": "Understood, store in the browser", "fs_bad": "The file {0} is not a valid Linkboard file.", "fs_replace": "The data in the file {0} will replace the data in this browser. Continue?", "fs_stopq": "Stop saving to a file? The file is kept, Linkboard will then only save in the browser.", "s_store": "Storage", "st_file": "File: {0}", "st_last": "last saved {0}", "st_conn": "connected", "st_perm": "access needed so changes can be saved", "st_lost": "The connection to the file has been lost", "st_err": "saving to the file failed", "st_browser": "Storage of this browser. Not synchronized between devices.", "st_unsup": "Browser storage. Your browser cannot save to a file (Chrome and Edge only). Back up your data regularly under Backup.", "s_allow": "Allow access", "s_stop": "Stop saving to a file", "s_backup": "Backup", "s_backupD": "A backup is a file you download. It is independent of the storage above and works in every browser.", "s_exp": "Download a backup", "s_imp": "Load a backup (JSON)", "fb_perm": "Linkboard needs access to the file {0} so changes can be saved.", "fb_err": "Saving to the file {0} failed.", "fb_lost": "The file is no longer connected.", "fb_retry": "Try again", "cf_title": "The file is newer", "cf_txt": "The file {0} contains a newer version (file: {1}, this browser: {2}). Which version do you want to use?", "cf_file": "Load the version from the file", "cf_keep": "Keep this browser version (overwrites the file)", "s_chkT": "Link check", "s_chkD": "Shows a green or red dot on each tile. With the link check off, the dots disappear too.", "s_statT": "Statistics", "s_statD": "Shows the statistics button at the top. With statistics off, no click history is recorded any more; the simple click counter per link keeps running.", "snd_note": "The sound only plays if the browser allows it: the page must have been clicked once since loading, and the tab must not be muted. Safari is especially strict.", "snd_fail": "The browser is blocking the sound right now. Click the page once and try again, and check whether the tab or device is muted.", "st_day": "Day", "st_week": "Week", "st_month": "Month", "st_top": "Most clicked links", "st_hist": "History", "st_all": "All links", "st_none": "No clicks in this period yet.", "st_note_a": "Recorded by day since {0}. Total: {1} clicks", "st_note_b": ", of which {0} from before then (not included in the periods)", "st_note_c": "No data by day yet. Counted so far: {0} clicks without a date.", "st_note_d": "No clicks counted yet. The statistics fill up as soon as you open links through this page.", "st_note_e": " Only clicks made through this page are counted; stored in this browser.", "wk_from": "Week of {0}", "n_clicks": "{0} clicks", "st_aria": "Click history", "im_h": "Import bookmarks", "im_arr": "Layout", "im_folders": "Keep folders", "im_flat": "All flat (Import 1, 2, 3 …)", "im_n": "Links per column (at most)", "im_alt": "Alternating per column", "im_one": "One color", "im_chkT": "Turn on the link check for imported links", "im_chkD": "Off by default: with many links this would otherwise send a large number of requests every 15 minutes.", "im_sel": "Selection", "im_q_ph": "Search the bookmarks …", "all": "All", "none": "None", "new": "Only new", "new_t": "Only links that are new and usable", "im_go": "Import", "im_go_n": "Import ({0})", "im_cnt": "{0} of {1} links selected", "im_sum": "{0} links in {1} folders found ({2}). {3} already present or duplicated, {4} cannot be opened. These are deselected but visible in the list.", "im_dup": "already present", "im_dupf": "duplicate in the file", "im_bad": "cannot be opened ({0})", "bad_noaddr": "no address", "im_none_found": "No bookmarks were found in this file.", "im_toast": "{0} links imported into {1} columns", "fold": "Expand or collapse", "mv_col": "Move column", "ph_title": "Title", "cnt_t": "Count", "sort_t": "Sort column", "sort": "Sort", "by_color": "Color", "by_clicks": "Most clicks", "del_tile": "Delete tile", "del_col": "Delete column", "oa": "↗ Open all", "oa_t": "Open all links of this column in new tabs", "mv_blk": "Move block", "ph_blk": "Block title", "add_col2": "+ Column", "del_blk": "Delete block", "hint_top": "No clicks yet. Your most clicked links will appear here.", "untitled": "untitled", "conf_col": "Delete column “{0}” with {1} links?", "conf_blk": "Delete block “{0}” with {1} links?", "new_col": "New column", "new_blk": "New block", "top_title": "Most clicked", "general": "General", "import_n": "Import", "bm_root": "Bookmarks", "ck_wait": "Checking …", "ck_na": "Cannot be checked from this page", "ck_ok": "Reachable", "ck_bad": "Not reachable", "ck_at": "{0} (checked {1})", "ck_off": "Offline, not checked", "wx_err": "Error: {0}", "wx_err_t": "Weather not available ({0}). Click to change the location.", "wx_prompt": "Location for the weather (e.g. Bern):", "wx_nf": "Location not found.", "oa_block": "The browser blocked {0} of {1} tabs. Allow pop-ups for this page (icon in the address bar) and click again. Tabs that are already open will open again.", "file_err": "The file could not be read.", "file_err2": "The file could not be read. Expected: a backup (.json) or a bookmarks file (.html).", "d_fav": "Favorites", "d_gen": "General", "d_news": "News", "d_dev": "Development", "d_leis": "Leisure", "d_music": "Music", "d_movies": "Movies & series", "d_read": "Reading"}};
 const WMO={"de": {"0": "Klar", "1": "Meist klar", "2": "Teils bewölkt", "3": "Bedeckt", "45": "Nebel", "48": "Nebel", "51": "Nieselregen", "53": "Nieselregen", "55": "Nieselregen", "61": "Regen", "63": "Regen", "65": "Starker Regen", "71": "Schnee", "73": "Schnee", "75": "Starker Schnee", "80": "Schauer", "81": "Schauer", "82": "Starke Schauer", "95": "Gewitter", "96": "Gewitter", "99": "Gewitter"}, "en": {"0": "Clear", "1": "Mostly clear", "2": "Partly cloudy", "3": "Overcast", "45": "Fog", "48": "Fog", "51": "Drizzle", "53": "Drizzle", "55": "Drizzle", "61": "Rain", "63": "Rain", "65": "Heavy rain", "71": "Snow", "73": "Snow", "75": "Heavy snow", "80": "Showers", "81": "Showers", "82": "Heavy showers", "95": "Thunderstorm", "96": "Thunderstorm", "99": "Thunderstorm"}};
 const tr=(k,...a)=>{let s=(I18N[LANG]||{})[k];if(s===undefined)s=I18N.de[k];if(s===undefined)s=k;return s.replace(/\{(\d+)\}/g,(m,i)=>a[i]!==undefined?a[i]:m)};
 const pn=p=>LANG=='en'?p.e:p.n;
@@ -315,7 +362,164 @@ function load(){
     ]};
   }
 }
-const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const save=()=>{const ts=Date.now();try{localStorage.setItem(KEY,JSON.stringify(S));localStorage.setItem(KEY+'-ts',ts)}catch(e){}fsQueue(ts)};
+/* Speicherung: Browser-Speicher oder Datei (File System Access API, nur Chrome und Edge) */
+const FS_OK=typeof window.showSaveFilePicker==='function'&&typeof window.showOpenFilePicker==='function';
+const FSK=KEY+'-store';
+const FS={mode:'',handle:null,name:'',perm:'none',last:null,err:false,hold:false,busy:Promise.resolve()};
+const fsMode=()=>{try{const m=localStorage.getItem(FSK);return m==='file'||m==='browser'?m:''}catch(e){return ''}};
+const fsSetMode=m=>{FS.mode=m;try{localStorage.setItem(FSK,m)}catch(e){}};
+const localTs=()=>{try{return +localStorage.getItem(KEY+'-ts')||0}catch(e){return 0}};
+const setLocalTs=t=>{try{localStorage.setItem(KEY+'-ts',t)}catch(e){}};
+const hasUserData=()=>{try{return localStorage.getItem(KEY)!==null}catch(e){return false}};
+const idb=(m,v)=>new Promise(res=>{try{
+  const r=indexedDB.open('linkboard-fs',1);
+  r.onupgradeneeded=()=>r.result.createObjectStore('h');
+  r.onerror=()=>res(null);
+  r.onsuccess=()=>{const db=r.result,st=db.transaction('h',m=='get'?'readonly':'readwrite').objectStore('h');
+    const q=m=='get'?st.get('file'):m=='set'?st.put(v,'file'):st.delete('file');
+    q.onsuccess=()=>{res(m=='get'?(q.result||null):true);db.close()};q.onerror=()=>{res(null);db.close()}};
+}catch(e){res(null)}});
+const FSP={types:[{description:'Linkboard',accept:{'application/json':['.json']}}]};
+const fsPayload=ts=>JSON.stringify(Object.assign({},S,{saved:ts}),null,1);
+const fsParse=t=>{try{const d=JSON.parse(t);if(d&&Array.isArray(d.blocks))return d;if(d&&Array.isArray(d.cols))return{blocks:[{id:uid(),title:'',cols:d.cols}],saved:d.saved}}catch(e){}return null};
+const fsFmt=t=>new Date(t).toLocaleString(LOC(),{dateStyle:'short',timeStyle:'short'});
+async function fsWrite(ts){
+  if(FS.mode!=='file'||!FS.handle||FS.perm!=='granted'||FS.hold)return;
+  try{const w=await FS.handle.createWritable();await w.write(fsPayload(ts));await w.close();FS.last=new Date();FS.err=false}
+  catch(e){FS.err=true}
+  fsUI();
+}
+let fsT=0;
+function fsQueue(ts){
+  if(FS.mode!=='file')return;
+  clearTimeout(fsT);
+  fsT=setTimeout(()=>{FS.busy=FS.busy.then(()=>fsWrite(ts))},300);
+}
+async function fsPerm(ask){
+  if(!FS.handle){FS.perm='none';return false}
+  try{
+    let p=await FS.handle.queryPermission({mode:'readwrite'});
+    if(p!=='granted'&&ask)p=await FS.handle.requestPermission({mode:'readwrite'});
+    FS.perm=p;
+  }catch(e){FS.perm='denied'}
+  return FS.perm==='granted';
+}
+function adoptFile(d,ts){
+  delete d.saved;S=d;
+  try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}
+  setLocalTs(ts);FS.hold=false;FS.err=false;FS.last=new Date();render();fsUI();
+}
+async function fsSync(){
+  if(FS.mode!=='file'||!FS.handle||FS.perm!=='granted')return;
+  let t;
+  try{t=await(await FS.handle.getFile()).text()}catch(e){FS.err=true;fsUI();return}
+  if(!t.trim()){FS.hold=false;const ts=localTs()||Date.now();setLocalTs(ts);await fsWrite(ts);return}
+  const d=fsParse(t);
+  if(!d){FS.hold=true;FS.err=true;fsUI();alert(tr('fs_bad',FS.name));return}
+  const ft=+d.saved||0,lt=localTs();
+  const same=JSON.stringify(Object.assign({},d,{saved:0}))===JSON.stringify(Object.assign({},S,{saved:0}));
+  if(same||Math.abs(ft-lt)<1500){FS.hold=false;FS.err=false;if(ft)setLocalTs(Math.max(ft,lt));FS.last=FS.last||new Date(ft||Date.now());fsUI();return}
+  if(ft<lt){FS.hold=false;await fsWrite(lt);return}
+  if(!lt){adoptFile(d,ft||Date.now());return}
+  FS.hold=true;
+  $('#cf_txt').textContent=tr('cf_txt',FS.name,ft?fsFmt(ft):'?',fsFmt(lt));
+  $('#cf_file').onclick=()=>{$('#cfdlg').close();adoptFile(d,ft||Date.now())};
+  $('#cf_keep').onclick=async()=>{$('#cfdlg').close();FS.hold=false;const ts=Date.now();setLocalTs(ts);await fsWrite(ts)};
+  if(!$('#cfdlg').open)$('#cfdlg').showModal();
+}
+async function fsAttach(h){
+  FS.handle=h;FS.name=h.name;FS.perm='granted';FS.err=false;FS.hold=false;
+  fsSetMode('file');await idb('set',h);
+}
+async function fsNew(){
+  if(!FS_OK)return false;
+  try{
+    const h=await window.showSaveFilePicker(Object.assign({suggestedName:'linkboard-daten.json'},FSP));
+    await fsAttach(h);
+    const ts=Date.now();setLocalTs(ts);
+    try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}
+    await fsWrite(ts);fsUI();return true;
+  }catch(e){return false}
+}
+async function fsOpen(){
+  if(!FS_OK)return false;
+  try{
+    const[h]=await window.showOpenFilePicker(Object.assign({multiple:false},FSP));
+    const t=await(await h.getFile()).text();
+    const d=t.trim()?fsParse(t):null;
+    if(t.trim()&&!d){alert(tr('fs_bad',h.name));return false}
+    if(d&&hasUserData()&&!confirm(tr('fs_replace',h.name)))return false;
+    await fsAttach(h);
+    if(d)adoptFile(d,+d.saved||Date.now());
+    else{const ts=Date.now();setLocalTs(ts);await fsWrite(ts)}
+    fsUI();return true;
+  }catch(e){return false}
+}
+async function fsStop(){
+  clearTimeout(fsT);FS.handle=null;FS.perm='none';FS.err=false;FS.hold=false;
+  await idb('del');fsSetMode('browser');
+  try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}
+  fsUI();
+}
+async function fsFocus(){
+  if(FS.mode!=='file'||!FS.handle||document.querySelector('dialog[open]'))return;
+  if(FS.perm!=='granted')await fsPerm(false);
+  if(FS.perm==='granted')await fsSync();
+  fsUI();
+}
+function fsBar(){
+  const bar=$('#fsbar');let msg='',lbl='',act=null;
+  if(FS.mode==='file'){
+    if(!FS.handle){msg=tr('fb_lost');lbl=tr('fs_open');act=async()=>{await fsOpen();fsUI()}}
+    else if(FS.perm!=='granted'){msg=tr('fb_perm',FS.name);lbl=tr('s_allow');act=async()=>{if(await fsPerm(true))await fsSync();fsUI()}}
+    else if(FS.err&&!FS.hold){msg=tr('fb_err',FS.name);lbl=tr('fb_retry');act=async()=>{await fsPerm(true);FS.err=false;await fsSync();fsUI()}}
+  }
+  bar.hidden=!msg;bar.textContent='';
+  if(msg){const s=document.createElement('span');s.textContent=msg;const b=document.createElement('button');b.className='btn';b.textContent=lbl;b.onclick=act;bar.append(s,b)}
+}
+function fsUI(){
+  fsBar();
+  const box=$('#s_fsst');if(!box)return;
+  let cls='',txt='';
+  if(FS.mode==='file'){
+    if(!FS.handle){cls='warn';txt=tr('st_lost')}
+    else if(FS.perm!=='granted'){cls='warn';txt=tr('st_file',FS.name)+' · '+tr('st_perm')}
+    else if(FS.err){cls='warn';txt=tr('st_file',FS.name)+' · '+tr('st_err')}
+    else{cls='ok';txt=tr('st_file',FS.name)+' · '+(FS.last?tr('st_last',FS.last.toLocaleTimeString(LOC(),{hour:'2-digit',minute:'2-digit'})):tr('st_conn'))}
+  }else{txt=FS_OK?tr('st_browser'):tr('st_unsup')}
+  box.className='fsst '+cls;$('#s_fstx').textContent=txt;
+  const f=FS.mode==='file';
+  $('#s_new').hidden=!FS_OK;$('#s_open').hidden=!FS_OK;
+  $('#s_allow').hidden=!(f&&FS.handle&&FS.perm!=='granted');
+  $('#s_stop').hidden=!f;
+}
+function fsDlg(){
+  const e=$('#fs_env');e.className='fsst '+(FS_OK?'ok':'warn');
+  $('#fs_envt').textContent=FS_OK?tr('fs_envOk'):tr('fs_envNo');
+  $('#fs_new').hidden=!FS_OK;$('#fs_open').hidden=!FS_OK;$('#fs_hint').hidden=!FS_OK;
+  $('#fs_had').hidden=!(FS_OK&&hasUserData());
+  $('#fs_browser').textContent=FS_OK?tr('fs_browser'):tr('fs_ack');
+  $('#fs_browser').className='btn'+(FS_OK?'':' pri');
+}
+async function fsInit(){
+  FS.mode=fsMode();
+  if(!FS.mode){fsDlg();$('#fsdlg').showModal();fsUI();return}
+  if(FS.mode==='file'){
+    if(!FS_OK){FS.mode='browser'}
+    else{FS.handle=await idb('get');if(FS.handle){FS.name=FS.handle.name;await fsPerm(false);if(FS.perm==='granted')await fsSync()}}
+  }
+  fsUI();
+}
+['#fsdlg','#cfdlg'].forEach(i=>$(i).addEventListener('cancel',e=>e.preventDefault()));
+$('#fs_new').onclick=async()=>{if(await fsNew())$('#fsdlg').close()};
+$('#fs_open').onclick=async()=>{if(await fsOpen())$('#fsdlg').close()};
+$('#fs_browser').onclick=()=>{fsSetMode('browser');$('#fsdlg').close();fsUI()};
+$('#s_new').onclick=async()=>{await fsNew();fsUI()};
+$('#s_open').onclick=async()=>{await fsOpen();fsUI()};
+$('#s_allow').onclick=async()=>{if(await fsPerm(true))await fsSync();fsUI()};
+$('#s_stop').onclick=()=>{if(confirm(tr('fs_stopq')))fsStop()};
+
 const findTile=id=>{for(const c of allCols()){const t=c.tiles.find(t=>t.id==id);if(t)return[c,t]}return[]};
 const count=a=>{
   const[,t]=findTile(a.closest('.tile').dataset.id);
@@ -423,7 +627,7 @@ $('#addsmart').onclick=()=>{
   if(!S.blocks.length)S.blocks.push({id:uid(),title:'',cols:[]});
   S.blocks[0].cols.unshift({id:uid(),title:tr('top_title'),smart:true,n:5,tiles:[]});save();render();scrollTo({top:0,behavior:'smooth'});
 };
-document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!edit){load();render()}});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!edit){load();render();fsFocus()}});
 
 /* Dialog */
 function swatches(){
@@ -466,7 +670,8 @@ $('#ok').onclick=()=>{
 $('#dlg').addEventListener('keydown',e=>{if(e.key=='Enter'&&e.target.tagName=='INPUT'&&e.target.type!='color')$('#ok').click()});
 
 /* Export / Import */
-$('#exp').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S,null,1)],{type:'application/json'}));a.download='startseite.json';a.click()};
+$('#s_exp').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S,null,1)],{type:'application/json'}));a.download='startseite.json';a.click()};
+$('#s_imp').onclick=()=>$('#file').click();
 $('#imp').onclick=()=>$('#file').click();
 $('#file').onchange=async e=>{
   const f=e.target.files[0];e.target.value='';if(!f)return;
@@ -526,7 +731,7 @@ function applyLang(){
   document.querySelectorAll('[data-i-ph]').forEach(e=>{e.placeholder=tr(e.dataset.iPh)});
   document.querySelectorAll('[data-i-aria]').forEach(e=>{e.setAttribute('aria-label',tr(e.dataset.iAria))});
   $('#lang').innerHTML='<span class="lg'+(LANG=='de'?' on':'')+'">DE</span>/<span class="lg'+(LANG=='en'?' on':'')+'">EN</span>';
-  render();tick();showWx();
+  render();tick();showWx();fsUI();if($('#fsdlg').open)fsDlg();
 }
 $('#lang').onclick=()=>{LANG=LANG=='de'?'en':'de';try{localStorage.setItem(KEY+'-lang',LANG)}catch(e){}applyLang()};
 
@@ -719,6 +924,7 @@ function openSettings(){
   $('#s_chk').checked=SET.chk;$('#s_stat').checked=SET.stat;
   $('#s_brk').checked=SET.brk;$('#s_brkbox').hidden=!SET.brk;
   $('#s_note').textContent=SNDNOTE();
+  fsUI();
   $('#setdlg').showModal();
 }
 $('#gear').onclick=openSettings;
@@ -867,6 +1073,7 @@ function tick(){
 tick();setInterval(tick,1000);
 
 load();applyLang();weather();setInterval(weather,15*60*1000);
+fsInit();
 </script>
 </body>
 </html>

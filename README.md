@@ -26,7 +26,7 @@ A single-file browser start page: your links as colored tiles, grouped into bloc
 - **Sorting** per column: A–Z, by color or by most clicks; filter by color; live search (Enter opens the first hit)
 - **Top links tile**: shows your most clicked links, Top 5 or Top 10
 - **Open all**: a button in every column header opens all links of that column in new tabs with one click (each counts as a click; your browser may ask you to allow pop-ups)
-- **Bookmark import**: **Import** (edit mode) also reads bookmark files (HTML) exported from Chrome, Edge, Firefox and Safari. Web, email, phone and app links are imported (not `javascript:`, `data:`, `file:`, `chrome:`, `about:` and similar). You choose which links to import, either keeping the folder structure (folder becomes block, subfolder becomes column) or flat in columns of 20 ("Import 1, 2, 3 …"); links that already exist are preselected off
+- **Bookmark import**: **Bookmarks** (edit mode) also reads bookmark files (HTML) exported from Chrome, Edge, Firefox and Safari. Web, email, phone and app links are imported (not `javascript:`, `data:`, `file:`, `chrome:`, `about:` and similar). You choose which links to import, either keeping the folder structure (folder becomes block, subfolder becomes column) or flat in columns of 20 ("Import 1, 2, 3 …"); links that already exist are preselected off
 - **Link check**: an optional green or red dot shows whether a link's server responds (not whether the page itself exists); can be switched off per link or globally in the settings
 - **Statistics**: a chart view (bar-chart button next to the color dots) shows your most clicked links and the click history per day, week or month; only clicks made through this page are counted; can be switched off in the settings (then no daily history is recorded)
 - **Weather and outside temperature** in the top right (Open-Meteo, no API key); click it to change the city
@@ -36,7 +36,8 @@ A single-file browser start page: your links as colored tiles, grouped into bloc
 - **Two languages**: the interface is available in English and German (button **DE/EN** next to the light/dark switch; the first start follows the browser language). Your own block, column and link names are never translated
 - **Dark and light theme**
 - **Responsive**, uses the full browser width
-- **Export / import** as a JSON file for backups
+- **Saving to a file** (Chrome and Edge only): Linkboard can store your data in a file, for example in a cloud folder, and keep two devices in sync (see *Storage and synchronization*). Linkboard asks about it on first start
+- **Backup** (settings): download a backup as a JSON file and load it again, in any browser
 
 ## Link types
 
@@ -60,6 +61,38 @@ Good to know:
 - **Link check, favicon and "Open all"** exist only for web links (`http`, `https`). Other tiles have no dot and no website icon.
 - Addresses containing a password or token (for example `https://user:secret@…`) do not belong in a tile, see *Data and privacy*.
 
+## Storage and synchronization
+
+By default Linkboard stores in the browser storage (see *Data and privacy*). That gives you two separate versions at home and at work. In **Chrome and Edge** you can choose a file instead, for example in a folder that OneDrive, iCloud Drive, Dropbox or Google Drive synchronizes. Linkboard writes every change to this file.
+
+**Which browsers can do this?**
+
+| Browser | Saving to a file |
+| --- | --- |
+| Chrome, Edge (version 86 and later), Chrome for Android (version 132 and later) | yes |
+| Opera, Vivaldi and other Chrome-based browsers | should work, not tested |
+| Firefox | **no** |
+| Safari | **no** |
+| Brave | only with a flag in the browser settings |
+| All browsers on iPhone and iPad | **no**, as far as we know, because all browsers there use Apple's engine |
+
+Where it does not work, your data stays in the browser storage. Use the **Backup** in the settings regularly then. On first start Linkboard shows this overview and tells you whether your browser can do it.
+
+**How to proceed:**
+
+1. A message appears on first start. Choose **Create a new file …** and save the file in your cloud folder (suggestion: `linkboard-daten.json`). Your existing data is copied into the file.
+2. On your second device choose **Open an existing file …** and pick the same file. The data in the file then replaces the data in that browser.
+3. Under *Settings*, *Storage* you see where Linkboard saves and when it last did. There you can switch the file or turn file saving off again.
+
+**Good to know:**
+
+- **What is synchronized?** Blocks, columns, tiles and click counters. Settings such as clock, coffee break, language, color palette, light/dark and weather location apply per device.
+- **Access after a restart:** After the tab was closed, the browser does not let Linkboard keep writing to the file automatically. Linkboard then shows a bar at the top with **Allow access**. One click is enough.
+- **If the file is newer:** If you changed something on the other device, Linkboard asks at start which version you want to use (load the file or keep this browser's version). Editing on both devices at the same time is not merged: a whole version always wins.
+- **The cloud service synchronizes the file, not Linkboard.** Linkboard sends nothing to a provider. Wait until the cloud service has updated the file before you open it on the other device.
+- **The file is plain-text JSON** (with an additional timestamp). You can use it as a backup at the same time.
+- **Locally opened file (`file://`):** We have not conclusively checked whether the browser allows saving to a file there as well. If it does not work for you, use the GitHub Pages version or the backup.
+
 ## Quick start
 
 1. Download `index.html`.
@@ -81,8 +114,9 @@ You can also host it with **GitHub Pages** (Settings → Pages → deploy from b
 | Weather city | Click the weather |
 | Statistics | Click the bar-chart button next to the color dots |
 | Open all links of a column | Click *Alle öffnen* in the column header (not in edit mode) |
-| Import browser bookmarks | Edit mode, **Import**, choose the exported `.html` file, select links, **Importieren** |
-| Backup | Edit mode, **Export** / **Import** |
+| Import browser bookmarks | Edit mode, **Bookmarks**, choose the exported `.html` file, select links, **Import** |
+| Synchronize data between devices | Settings, *Storage*, **Create a new file …** or **Open an existing file …** (Chrome and Edge only) |
+| Backup | Settings, *Backup*, **Download a backup** / **Load a backup (JSON)** |
 
 ## Data and privacy
 
@@ -99,6 +133,7 @@ Linkboard has no server of its own. The author does not receive, collect or stor
 | Weather location (coordinates; name only when you change the city) | **Yes**, to Open-Meteo. Without your own choice these are the coordinates of Bern. |
 | SortableJS library | is **loaded** from cdnjs/Cloudflare (request with your IP address) |
 | Request to every web link with the link check on | **Yes**, directly to the target server |
+| File you choose in Chrome or Edge | **Not by Linkboard.** Linkboard only writes into that file. If it lies in a cloud folder, the cloud service transfers it under its own rules. |
 | Coffee break and chime | **No.** A pure browser feature, nothing is requested. |
 | Email, phone, file and app links | **No**, until you click them. Then the browser or operating system takes over. |
 
@@ -110,14 +145,17 @@ Linkboard saves its data in the **local storage** of your browser (`localStorage
 - `startseite-v1-chk`: results of the link check (URL, reachable yes/no, time of the check)
 - `startseite-v1-settings`: settings (clock format, coffee break on/off with times and sound, link check on/off, statistics on/off)
 - `startseite-v1-lang`: interface language (`de` or `en`)
+- `startseite-v1-store`: storage type (`browser` or `file`)
+- `startseite-v1-ts`: time of the last change (for comparison with the file)
+- IndexedDB `linkboard-fs`: only if you chose a file; it holds a reference to that file (not its content) so Linkboard can find it again after a restart
 - `startseite-v1-loc`: weather city (name and coordinates), only after you changed it
 - `startseite-v1-pal`, `startseite-v1-theme`: color palette and light/dark theme
 
 What this means:
 
-- The data belongs to one browser, one browser profile, one device and one page address. Linkboard opened in Chrome and in Firefox, or as a local file and from GitHub Pages, has separate data. Use **Export** and **Import** to move it.
+- The data belongs to one browser, one browser profile, one device and one page address. Linkboard opened in Chrome and in Firefox, or as a local file and from GitHub Pages, has separate data. Use saving to a file (Chrome and Edge only) or a backup (settings, *Backup*) to move it.
 - As far as we know, browsers do not encrypt local storage themselves. Anyone with access to your user account or to an unencrypted disk can read it. Use separate user accounts and disk encryption (for example BitLocker or FileVault).
-- The export file is plain-text JSON and contains all your links and the click history. Store it accordingly.
+- The backup file and the storage file are plain-text JSON and contain all your links and the click history. Store them accordingly, especially in a cloud folder that others can access.
 - Do not put passwords, tokens or other secrets into link URLs (not as `https://user:password@…` and not as secret share links either). They are stored as plain text in local storage and in the export file, and are sent to the target site when you click them.
 - If you create `mailto:` or `tel:` tiles for other people, you are storing their personal data. For private use this is usually unproblematic, in a business setting it is relevant for data protection (see *Swiss data protection law*).
 - Private windows do not keep the data after they are closed.
@@ -150,14 +188,15 @@ The paths are examples for the default profile. The profile folder can have anot
 
 ### Local file or hosted version
 
-- Firefox (since version 92): every file path has its own storage. If you move or rename `index.html`, Linkboard starts empty. Restore your data with **Import**.
+- Firefox (since version 92): every file path has its own storage. If you move or rename `index.html`, Linkboard starts empty. Restore your data with **Load a backup (JSON)** in the settings.
 - Chrome and Edge: local files share one storage area (at least within the same folder). This behavior is not standardized and may change. Other local HTML pages could therefore read or overwrite Linkboard's data. If that matters, host Linkboard on a web server.
 - Safari: use the downloaded local file rather than the GitHub Pages link (see the note at the top). The 7-day rule is documented for websites. For local files we found no confirmation that it applies, and their behavior in Safari is not officially documented either. Make regular exports in any case.
 
 ### View or delete the data
 
 - View: open the developer tools. Chrome and Edge: `F12`, tab *Application*, *Local Storage*. Firefox: `F12`, tab *Storage*, *Local Storage*. Safari: enable the Develop menu in the settings, then *Show Web Inspector*, tab *Storage*, *Local Storage*.
-- Delete: either remove the keys starting with `startseite-v1` in the developer tools, or delete the website data in the browser settings (privacy section, "cookies and site data" or "website data"; the menu names vary by version). Make an **Export** first if you want to keep your links.
+- File: If you stop saving to a file (settings, *Storage*, **Stop saving to a file**), the reference to the file is deleted. The file itself remains, delete it yourself if needed.
+- Delete: either remove the keys starting with `startseite-v1` in the developer tools, or delete the website data in the browser settings (privacy section, "cookies and site data" or "website data"; the menu names vary by version). Make a **backup** first if you want to keep your links.
 
 ### Which external services are contacted?
 
