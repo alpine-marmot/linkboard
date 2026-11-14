@@ -18,6 +18,8 @@ Eine Browser-Startseite in einer einzigen Datei: deine Links als farbige Kacheln
 
 ![Lesezeichen-Import](screenshots/import.png)
 
+![Meldung beim ersten Start: Wo sollen deine Daten gespeichert werden?](screenshots/first-start.png)
+
 ## Funktionen
 
 - **Link-Kacheln** mit Name, Adresse und Farbe (4 Farbpaletten, darunter Graustufen, plus freie Farbwahl), Öffnen in einem neuen Tab. Es geht **nicht nur um Webadressen**: auch E-Mail, Telefon, Dateien, Ordner und Apps sind möglich (siehe *Link-Arten*)

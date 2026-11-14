@@ -18,6 +18,8 @@ A single-file browser start page: your links as colored tiles, grouped into bloc
 
 ![Bookmark import](screenshots/import.png)
 
+![First-start message: where to store your data (German interface)](screenshots/first-start.png)
+
 ## Features
 
 - **Link tiles** with name, URL and color (4 color palettes including grayscale, plus a free color picker), opened in a new tab. **Not only web addresses** work: email, phone, files, folders and apps are possible too (see *Link types*)
