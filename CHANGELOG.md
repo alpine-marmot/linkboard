@@ -6,6 +6,9 @@ All notable changes to Linkboard are listed here. The format follows [Keep a Cha
 
 ## [Unreleased]
 
+### Changed
+- The browser tab title is now **Linkboard** (before: "Start page" / "Startseite") in both languages.
+
 ## [1.3.0] - 2026-11-14
 
 ### Added

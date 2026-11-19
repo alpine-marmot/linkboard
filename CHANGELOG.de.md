@@ -6,6 +6,9 @@ Hier stehen alle wichtigen Änderungen an Linkboard. Das Format folgt [Keep a Ch
 
 ## [Unveröffentlicht]
 
+### Geändert
+- Der Tab-Titel im Browser lautet jetzt in beiden Sprachen **Linkboard** (vorher "Startseite" / "Start page").
+
 ## [1.3.0] - 2026-11-14
 
 ### Neu
