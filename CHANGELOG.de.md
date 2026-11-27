@@ -6,6 +6,19 @@ Hier stehen alle wichtigen Änderungen an Linkboard. Das Format folgt [Keep a Ch
 
 ## [Unveröffentlicht]
 
+## [1.4.0] - 2026-11-27
+
+### Hinzugefügt
+- **Überschriften in einer Spalte:** **+ Link** im Bearbeiten-Modus fragt jetzt, ob ein neuer Link oder eine neue Überschrift hinzugefügt werden soll. Überschriften lassen sich umbenennen, verschieben und löschen und werden bei Suche und Farbfilter ausgeblendet. Sie zählen nicht beim Link-Check, bei der Statistik, bei den Top-Links, beim Lesezeichen-Import und bei "Alle öffnen".
+- **Drei-Tage-Wettervorhersage** in der Kopfzeile (heute und die nächsten zwei Tage mit Symbol, Höchst- und Tiefstwert; Beschreibung und Regenwahrscheinlichkeit erscheinen als Tooltip).
+- **Analoge Uhr:** Die Uhr lässt sich in den Einstellungen (Abschnitt *Uhr*, *Darstellung*) zwischen digital und analog umschalten. Die Wahl 12/24 Stunden gilt nur für die digitale Uhr.
+
+### Geändert
+- **Sortieren gilt pro Abschnitt:** In Spalten mit Überschriften werden Links nur zwischen zwei Überschriften sortiert; die Überschriften behalten ihren Platz.
+- **Link-Check:** Blockiert eine Seite die Prüfung vom Browser aus (zum Beispiel durch einen *Cross-Origin-Resource-Policy*-Header, wie bei claude.ai) oder ist sie schnell nicht erreichbar, ist der Punkt jetzt grau (*nicht prüfbar*) statt rot. Rot bedeutet nur noch, dass der Server innerhalb von 8 Sekunden nicht geantwortet hat.
+
+## [1.3.1] - 2026-11-19
+
 ### Geändert
 - Der Tab-Titel im Browser lautet jetzt in beiden Sprachen **Linkboard** (vorher "Startseite" / "Start page").
 
@@ -71,7 +84,9 @@ Erste öffentliche Version.
 - Export und Import als JSON-Datei.
 - README auf Deutsch und Englisch, MIT-Lizenz.
 
-[Unveröffentlicht]: https://github.com/alpine-marmot/linkboard/compare/v1.3.0...HEAD
+[Unveröffentlicht]: https://github.com/alpine-marmot/linkboard/compare/v1.4.0...HEAD
+[1.4.0]: https://github.com/alpine-marmot/linkboard/compare/v1.3.1...v1.4.0
+[1.3.1]: https://github.com/alpine-marmot/linkboard/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/alpine-marmot/linkboard/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/alpine-marmot/linkboard/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/alpine-marmot/linkboard/compare/v1.0.0...v1.1.0

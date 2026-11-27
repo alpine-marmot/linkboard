@@ -20,21 +20,26 @@ Eine Browser-Startseite in einer einzigen Datei: deine Links als farbige Kacheln
 
 ![Meldung beim ersten Start: Wo sollen deine Daten gespeichert werden?](screenshots/first-start.png)
 
+![Überschriften in einer Spalte (Bearbeiten-Modus)](screenshots/headings.png)
+
+![Drei-Tage-Vorhersage und analoge Uhr in der Kopfzeile](screenshots/weather-clock.png)
+
 ## Funktionen
 
 - **Link-Kacheln** mit Name, Adresse und Farbe (4 Farbpaletten, darunter Graustufen, plus freie Farbwahl), Öffnen in einem neuen Tab. Es geht **nicht nur um Webadressen**: auch E-Mail, Telefon, Dateien, Ordner und Apps sind möglich (siehe *Link-Arten*)
 - **Zwei Kachelformen**: breite Buttons oder quadratische Kacheln (zwei pro Reihe, so hoch wie zwei breite Buttons)
 - **Blöcke → Spalten → Kacheln**, alle mit editierbaren Titeln und Drag-and-Drop (auch auf Touchscreens)
+- **Überschriften in einer Spalte**: Im Bearbeiten-Modus fragt **+ Link**, ob du einen neuen Link oder eine neue Überschrift möchtest. Überschriften gliedern eine Spalte in Abschnitte, lassen sich wie Kacheln umbenennen, verschieben und löschen und werden bei Suche und Farbfilter ausgeblendet. Das Sortieren gilt pro Abschnitt (Links werden nur zwischen zwei Überschriften sortiert)
 - **Sortieren** pro Spalte: A–Z, nach Farbe oder nach meisten Klicks; Filter nach Farbe; Live-Suche (Enter öffnet den ersten Treffer)
 - **Top-Links-Kachel**: zeigt die meistgeklickten Links, Top 5 oder Top 10
 - **Alle öffnen**: Ein Button im Kopf jeder Spalte öffnet alle Links dieser Spalte mit einem Klick in neuen Tabs (jeder zählt als Klick; der Browser fragt eventuell, ob Pop-ups erlaubt sind)
 - **Lesezeichen-Import**: **Lesezeichen** (Bearbeitungsmodus) liest auch Lesezeichen-Dateien (HTML) aus Chrome, Edge, Firefox und Safari. Übernommen werden Web-, E-Mail-, Telefon- und App-Links (nicht `javascript:`, `data:`, `file:`, `chrome:`, `about:` und ähnliche). Du wählst die Links aus und übernimmst entweder die Ordnerstruktur (Ordner wird Block, Unterordner wird Spalte) oder legst alles flach in Spalten zu 20 an ("Import 1, 2, 3 …"); bereits vorhandene Links sind abgewählt
-- **Link-Check**: ein optionaler grüner oder roter Punkt zeigt, ob der Server eines Links antwortet (nicht, ob die Seite selbst existiert); pro Link oder global in den Einstellungen abschaltbar
+- **Link-Check**: ein optionaler grüner oder roter Punkt zeigt, ob der Server eines Links antwortet (nicht, ob die Seite selbst existiert). Ein grauer Punkt heisst *nicht prüfbar*, zum Beispiel wenn eine Seite die Prüfung blockiert; pro Link oder global in den Einstellungen abschaltbar
 - **Statistik**: eine Diagrammansicht (Balken-Symbol neben den Farbpunkten) zeigt die meistgeklickten Links und den Klickverlauf pro Tag, Woche oder Monat; gezählt werden nur Klicks über diese Seite; in den Einstellungen abschaltbar (dann wird kein Tagesverlauf mehr aufgezeichnet)
-- **Wetter und Aussentemperatur** oben rechts (Open-Meteo, kein API-Schlüssel); per Klick änderst du den Ort
-- **Digitale Uhr** (24 h oder 12 h AM/PM)
+- **Wetter und Aussentemperatur** oben rechts (Open-Meteo, kein API-Schlüssel) mit **Drei-Tage-Vorhersage** (heute und die nächsten zwei Tage: Symbol, Höchst-/Tiefstwert, Regenwahrscheinlichkeit als Tooltip); per Klick auf das aktuelle Wetter änderst du den Ort
+- **Digitale oder analoge Uhr** (Umschalten in den Einstellungen; digital in 24 h oder 12 h AM/PM)
 - **Kaffeepause** (optional, standardmässig aus): zeigt zu den eingestellten Zeiten (Standard 09:30 und 15:00) eine Tasse mit Dampf-Animation für eine Minute, auf Wunsch mit kurzem Signalton. Einschalten in den Einstellungen unter *Funktionen*
-- **Einstellungen** (Zahnrad oben rechts): Uhrformat; unter *Funktionen* Kaffeepause (mit Zeiten und optionalem Ton), Link-Check und Statistik jeweils ein/aus
+- **Einstellungen** (Zahnrad oben rechts): Uhr (digital oder analog, Zeitformat); unter *Funktionen* Kaffeepause (mit Zeiten und optionalem Ton), Link-Check und Statistik jeweils ein/aus
 - **Zwei Sprachen**: Die Oberfläche gibt es auf Deutsch und Englisch (Button **DE/EN** neben dem Hell/Dunkel-Umschalter; beim ersten Start gilt die Browsersprache). Deine eigenen Block-, Spalten- und Linknamen werden nie übersetzt
 - **Dunkles und helles Design**
 - **Responsiv**, nutzt die volle Browserbreite

@@ -6,6 +6,19 @@ All notable changes to Linkboard are listed here. The format follows [Keep a Cha
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-11-27
+
+### Added
+- **Headings inside a column:** **+ Link** in edit mode now asks whether to add a new link or a new heading. Headings can be renamed, moved and deleted, and are hidden while searching or filtering by color. They are not counted in the link check, statistics, top links, bookmark import or "Open all".
+- **Three-day weather forecast** in the header (today and the next two days with symbol, high and low; the description and rain probability appear as a tooltip).
+- **Analog clock:** the clock can be switched between digital and analog in the settings (section *Clock*, *Display*). The 12/24 h option applies to the digital clock only.
+
+### Changed
+- **Sorting works per section:** in columns with headings, links are only sorted between two headings; the headings keep their place.
+- **Link check:** if a site blocks the check from the browser (for example through a *Cross-Origin-Resource-Policy* header, as claude.ai does) or cannot be reached quickly, the dot is now grey (*cannot be checked*) instead of red. Red now only means that the server did not answer within 8 seconds.
+
+## [1.3.1] - 2026-11-19
+
 ### Changed
 - The browser tab title is now **Linkboard** (before: "Start page" / "Startseite") in both languages.
 
@@ -71,7 +84,9 @@ First public release.
 - Export and import as a JSON file.
 - English and German README, MIT license.
 
-[Unreleased]: https://github.com/alpine-marmot/linkboard/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/alpine-marmot/linkboard/compare/v1.4.0...HEAD
+[1.4.0]: https://github.com/alpine-marmot/linkboard/compare/v1.3.1...v1.4.0
+[1.3.1]: https://github.com/alpine-marmot/linkboard/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/alpine-marmot/linkboard/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/alpine-marmot/linkboard/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/alpine-marmot/linkboard/compare/v1.0.0...v1.1.0

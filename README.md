@@ -20,21 +20,26 @@ A single-file browser start page: your links as colored tiles, grouped into bloc
 
 ![First-start message: where to store your data (German interface)](screenshots/first-start.png)
 
+![Headings inside a column (edit mode, German interface)](screenshots/headings.png)
+
+![Three-day forecast and analog clock in the header](screenshots/weather-clock.png)
+
 ## Features
 
 - **Link tiles** with name, URL and color (4 color palettes including grayscale, plus a free color picker), opened in a new tab. **Not only web addresses** work: email, phone, files, folders and apps are possible too (see *Link types*)
 - **Two tile shapes**: wide buttons or square tiles (two per row, as high as two wide buttons)
 - **Blocks → columns → tiles**, all with editable titles and drag and drop (also on touch screens)
+- **Headings inside a column**: in edit mode, **+ Link** asks whether you want a new link or a new heading. Headings divide a column into sections, can be renamed, moved and deleted like tiles, and are hidden while you search or filter by color. Sorting works per section (links are only sorted between two headings)
 - **Sorting** per column: A–Z, by color or by most clicks; filter by color; live search (Enter opens the first hit)
 - **Top links tile**: shows your most clicked links, Top 5 or Top 10
 - **Open all**: a button in every column header opens all links of that column in new tabs with one click (each counts as a click; your browser may ask you to allow pop-ups)
 - **Bookmark import**: **Bookmarks** (edit mode) also reads bookmark files (HTML) exported from Chrome, Edge, Firefox and Safari. Web, email, phone and app links are imported (not `javascript:`, `data:`, `file:`, `chrome:`, `about:` and similar). You choose which links to import, either keeping the folder structure (folder becomes block, subfolder becomes column) or flat in columns of 20 ("Import 1, 2, 3 …"); links that already exist are preselected off
-- **Link check**: an optional green or red dot shows whether a link's server responds (not whether the page itself exists); can be switched off per link or globally in the settings
+- **Link check**: an optional green or red dot shows whether a link's server responds (not whether the page itself exists). A grey dot means *cannot be checked*, for example when a site blocks the check; can be switched off per link or globally in the settings
 - **Statistics**: a chart view (bar-chart button next to the color dots) shows your most clicked links and the click history per day, week or month; only clicks made through this page are counted; can be switched off in the settings (then no daily history is recorded)
-- **Weather and outside temperature** in the top right (Open-Meteo, no API key); click it to change the city
-- **Digital clock** (24 h or 12 h AM/PM)
+- **Weather and outside temperature** in the top right (Open-Meteo, no API key) with a **three-day forecast** (today and the next two days: symbol, high/low, rain probability as a tooltip); click the current weather to change the city
+- **Digital or analog clock** (switch in the settings; digital in 24 h or 12 h AM/PM)
 - **Coffee break** (optional, off by default): at the set times (default 09:30 and 15:00) a cup with animated steam replaces the time for one minute, optionally with a short chime. Turn it on in the settings under *Features*
-- **Settings** (gear icon, top right): clock format; under *Features* coffee break (with times and optional sound), link check and statistics, each on/off
+- **Settings** (gear icon, top right): clock (digital or analog, time format); under *Features* coffee break (with times and optional sound), link check and statistics, each on/off
 - **Two languages**: the interface is available in English and German (button **DE/EN** next to the light/dark switch; the first start follows the browser language). Your own block, column and link names are never translated
 - **Dark and light theme**
 - **Responsive**, uses the full browser width
